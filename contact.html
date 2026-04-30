@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>견적 문의 — 비움앤타일 파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{font-family:'Pretendard',-apple-system,sans-serif;background:#fffdf9;color:#1A1A1A;overflow-x:hidden;}
+:root{--gold:#B8963C;--gold-light:#D4AF5A;}
+
+/* 헤더 */
+.bium-header{background:#111;width:100%;position:sticky;top:0;z-index:1000;border-bottom:1px solid #222;}
+.bium-header-inner{max-width:1400px;margin:0 auto;padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.bium-logo img{height:36px;width:auto;display:block;}
+.bium-nav{display:flex;align-items:center;gap:36px;list-style:none;}
+.bium-nav a{color:#ccc;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:0.5px;transition:color 0.2s;white-space:nowrap;}
+.bium-nav a:hover{color:#fff;}
+.bium-nav .nav-cta a{background:#B8963C;color:#fff;padding:8px 20px;border-radius:4px;font-weight:600;}
+.bium-nav .nav-cta a:hover{background:#a07830;}
+.bium-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.bium-hamburger span{width:24px;height:2px;background:#fff;border-radius:2px;}
+.bium-mobile-menu{display:none;background:#111;border-top:1px solid #222;}
+.bium-mobile-menu.open{display:block;}
+.bium-mobile-menu a{display:block;padding:16px 40px;color:#ccc;text-decoration:none;font-size:15px;border-bottom:1px solid #1a1a1a;}
+@media(max-width:768px){.bium-nav{display:none;}.bium-hamburger{display:flex;}.bium-header-inner{padding:0 20px;}}
+
+/* 히어로 */
+.contact-hero{line-height:0;}
+.contact-hero img{width:100%;height:auto;display:block;}
+
+/* 문의 선택 섹션 */
+.contact-section{background:linear-gradient(to bottom, #F5F0E8 0%, #E8E3DB 100%);padding:80px 40px;}
+.contact-section-inner{max-width:1100px;margin:0 auto;}
+.contact-section-header{text-align:center;margin-bottom:56px;}
+.contact-section-eyebrow{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.contact-section-title{font-family:'Noto Serif KR',serif;font-size:clamp(26px,3.5vw,40px);font-weight:700;color:#111;letter-spacing:-0.5px;margin-bottom:12px;}
+.contact-section-desc{font-size:15px;color:#888;line-height:1.8;word-break:keep-all;}
+
+/* 카드 그리드 */
+.contact-cards{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:780px;margin:0 auto;}
+
+.contact-card{background:#fff;border-radius:16px;overflow:hidden;border:1.5px solid #EAE6E0;transition:all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);text-decoration:none;display:flex;flex-direction:column;}
+.contact-card:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(0,0,0,0.1);border-color:#C8A84A;}
+
+/* 카드 이미지 */
+.contact-card-img{position:relative;overflow:visible;aspect-ratio:4/3;}
+.contact-card-img img{width:100%;height:100%;object-fit:cover;border-radius:0;display:block;}
+.contact-card:hover .contact-card-img img{transform:scale(1.04);}
+.contact-card-img-wrap{overflow:hidden;aspect-ratio:4/3;position:relative;}
+.contact-card-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.contact-card:hover .contact-card-img-wrap img{transform:scale(1.04);}
+
+/* 아이콘 동그라미 — 이미지 하단 중앙에 겹침 */
+.contact-card-icon-wrap{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);z-index:10;}
+.contact-card-icon{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid #EAE6E0;box-shadow:0 4px 16px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.contact-card.kakao .contact-card-icon{border-color:#F9E000;}
+.contact-card.form  .contact-card-icon{border-color:var(--gold);}
+
+.contact-card-title{font-family:'Pretendard',-apple-system,sans-serif;font-size:clamp(22px,2.2vw,28px);font-weight:700;color:#111;margin-bottom:10px;letter-spacing:-0.5px;text-align:center;}
+.contact-card-desc{font-size:16px;color:#888;line-height:1.8;margin-bottom:28px;word-break:keep-all;text-align:center;}
+
+/* 체크리스트 */
+.contact-card-list{list-style:none;margin:0 auto 32px;display:flex;flex-direction:column;gap:10px;width:fit-content;}
+.contact-card-list li{font-size:15px;color:#555;display:flex;align-items:center;gap:8px;}
+.contact-card-list li::before{content:'✓';color:var(--gold);font-weight:700;font-size:13px;flex-shrink:0;}
+
+/* 버튼 */
+.contact-card-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 28px;border-radius:8px;font-size:16px;font-weight:700;transition:all 0.2s;margin:auto auto 0;width:75%;}
+.contact-card.kakao .contact-card-btn{background:#F9E000;color:#111;}
+.contact-card.kakao .contact-card-btn:hover{background:#F0D800;box-shadow:0 6px 20px rgba(249,224,0,0.4);}
+.contact-card.form  .contact-card-btn{background:#1A1A1A;color:#fff;}
+.contact-card.form  .contact-card-btn:hover{background:var(--gold);box-shadow:0 6px 20px rgba(184,150,60,0.3);}
+
+.contact-card-note{font-size:13px;color:#aaa;text-align:center;margin-top:14px;line-height:1.6;}
+
+/* 하단 안내 배너 */
+.contact-notice{background:#F5F0E8;border-top:1px solid #EAE0CC;padding:40px;text-align:center;}
+.contact-notice-inner{max-width:600px;margin:0 auto;}
+.contact-notice-icon{font-size:20px;width:40px;height:40px;border-radius:50%;background:#fff;border:1.5px solid #DDD;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.contact-notice-title{font-family:'Noto Serif KR',serif;font-size:clamp(18px,2vw,22px);font-weight:700;color:#111;margin-bottom:8px;}
+.contact-notice-desc{font-size:14px;color:#777;line-height:1.8;word-break:keep-all;}
+
+/* 푸터 */
+.bium-footer{background:#F5F5F5;border-top:1px solid #E0E0E0;padding:60px 40px 40px;}
+.bium-footer-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:48px;}
+.bium-footer-logo{font-size:15px;font-weight:800;letter-spacing:1.5px;color:#1A1A1A;text-transform:uppercase;margin-bottom:16px;}
+.bium-footer-info{font-size:13px;color:#666;line-height:2;}
+.bium-footer-info strong{color:#333;}
+.bium-footer-copy{font-size:12px;color:#999;margin-top:20px;}
+.bium-footer-col-title{font-size:14px;font-weight:700;color:#1A1A1A;margin-bottom:16px;}
+.bium-footer-phone{font-size:28px;font-weight:800;color:#1A1A1A;letter-spacing:-0.5px;margin-bottom:8px;}
+.bium-footer-hours{font-size:13px;color:#777;line-height:1.9;margin-bottom:20px;}
+.bium-footer-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.bium-footer-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border:1.5px solid #ccc;border-radius:4px;font-size:13px;font-weight:600;color:#333;text-decoration:none;background:#fff;transition:all 0.2s;}
+.bium-footer-btn:hover{border-color:#333;color:#111;}
+.bium-footer-btn.kakao{background:#F9E000;border-color:#F9E000;color:#111;}
+.bium-footer-btn.kakao:hover{background:#F0D800;}
+.bium-footer-links{border-top:1px solid #E0E0E0;margin-top:40px;padding-top:24px;display:flex;gap:24px;flex-wrap:wrap;}
+.bium-footer-links a{font-size:12px;color:#888;text-decoration:none;}
+.bium-footer-links a:hover{color:#333;}
+
+/* 페이드인 */
+.fade-up{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+.fade-up.delay1{transition-delay:0.15s;}
+.fade-up.delay2{transition-delay:0.3s;}
+
+@media(max-width:900px){
+  .contact-cards{grid-template-columns:1fr;max-width:520px;margin:0 auto;}
+  .bium-footer-inner{grid-template-columns:1fr;gap:32px;}
+  .bium-footer{padding:40px 20px 32px;}
+}
+@media(max-width:768px){
+  .contact-section{padding:56px 20px;}
+  .contact-card-body{padding:24px 24px 28px;}
+  .contact-notice{padding:36px 20px;}
+}
+</style>
+</head>
+<body>
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/tilehome.html" class="bium-logo">
+      <img src="data:image/png;base64,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" alt="VE:UM & TILE" style="height:36px;width:auto;display:block;">
+    </a>
+    <nav>
+      <ul class="bium-nav">
+        <li><a href="/package.html">시공 패키지</a></li>
+        <li><a href="/bathroom.html">욕실 패키지</a></li>
+        <li><a href="/gallery.html">시공 사례</a></li>
+        <li class="nav-cta"><a href="/contact.html">견적 문의</a></li>
+      </ul>
+    </nav>
+    <div class="bium-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+  <div class="bium-mobile-menu" id="biumMobileMenu">
+    <a href="/package.html">시공 패키지</a>
+    <a href="/bathroom.html">욕실 패키지</a>
+    <a href="/gallery.html">시공 사례</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</header>
+
+<!-- 히어로 -->
+<section class="contact-hero">
+  <img src="./images/contact-hero.png" alt="사진 한 장으로 시작하는 간편한 상담">
+</section>
+
+<!-- 문의 방법 선택 -->
+<section class="contact-section">
+  <div class="contact-section-inner">
+    <div style="text-align:center; margin-bottom:40px;">
+      <p style="font-size:16px; color:#666; line-height:1.9; word-break:keep-all;">
+        사진만 보내도 상담 가능하고,<br>
+        견적요청서를 작성하시면 더 자세한 상담이 가능합니다.
+      </p>
+    </div>
+
+    <div class="contact-cards">
+
+      <!-- 카카오톡 카드 -->
+      <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="contact-card kakao fade-up">
+        <div class="contact-card-img" style="position:relative;">
+          <div class="contact-card-img-wrap">
+            <img src="./images/contact-kakao.png" alt="카카오톡 1:1 문의">
+          </div>
+          <div class="contact-card-icon-wrap">
+            <div class="contact-card-icon">💬</div>
+          </div>
+        </div>
+        <div class="contact-card-body" style="padding-top:44px;">
+          <div class="contact-card-title">카카오톡 1:1 문의</div>
+          <div class="contact-card-desc">간단한 질문이나 빠른 상담이 필요할 때</div>
+          <ul class="contact-card-list">
+            <li>공사 가능 여부 문의</li>
+            <li>사진 보내고 간단 상담</li>
+            <li>진행 방식 확인</li>
+            <li>견적요청서 링크 안내 가능</li>
+          </ul>
+          <div class="contact-card-btn">💬 카카오톡 상담하기 →</div>
+          <div class="contact-card-note">상담 후 정확한 견적을 위해<br>요청서 작성을 안내해드릴 수 있습니다.</div>
+        </div>
+      </a>
+
+      <!-- 구글폼 카드 -->
+      <a href="https://forms.gle/9FBjxBR5zf9Xhvtw6" target="_blank" class="contact-card form fade-up delay1">
+        <div class="contact-card-img" style="position:relative;">
+          <div class="contact-card-img-wrap">
+            <img src="./images/contact-form.png" alt="견적요청서 작성">
+          </div>
+          <div class="contact-card-icon-wrap">
+            <div class="contact-card-icon">📋</div>
+          </div>
+        </div>
+        <div class="contact-card-body" style="padding-top:44px;">
+          <div class="contact-card-title">견적요청서 작성</div>
+          <div class="contact-card-desc">정확한 견적 안내를 받고 싶을 때</div>
+          <ul class="contact-card-list">
+            <li>공사 공간 선택</li>
+            <li>사진 첨부</li>
+            <li>희망 일정 입력</li>
+            <li>필요한 공사 범위 정리</li>
+          </ul>
+          <div class="contact-card-btn">견적요청서 작성하기 →</div>
+          <div class="contact-card-note">사진과 정보를 남겨주시면<br>확인 후 연락드립니다.</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- 하단 안내 배너 -->
+<div style="background-image:url('./images/contact-btbg.png'); background-size:cover; background-position:center; padding:64px 40px; text-align:center;">
+  <p style="font-family:'Pretendard',-apple-system,sans-serif; font-size:clamp(22px,2.8vw,38px); font-weight:700; color:#1A1A1A; letter-spacing:-0.5px; margin-bottom:16px; line-height:1.3;">편하신 방법으로 먼저 연락주세요.</p>
+  <p style="font-family:'Pretendard',-apple-system,sans-serif; font-size:clamp(14px,1.4vw,18px); font-weight:500; color:#333; line-height:1.9; word-break:keep-all;">비움앤타일이 처음부터 끝까지 함께합니다.<br>궁금한 점이 있으시면 언제든지 문의해주세요. 빠르게 확인 후 연락드리겠습니다.</p>
+</div>
+
+<footer class="bium-footer">
+  <div class="bium-footer-inner">
+    <div>
+      <div class="bium-footer-logo">VE:UM &amp; TILE PARTNERS</div>
+      <div class="bium-footer-info"><strong>비움앤타일 파트너스</strong><br>대표. 김영민<br>사업자등록번호. 362-65-00396<br>경기도 성남시 수정구 청계산로 1길 19 2층<br>Tel. 010-6548-8753<br>서울·경기 전 지역 서비스</div>
+      <div class="bium-footer-copy">COPYRIGHT© 비움앤타일 파트너스. ALL RIGHTS RESERVED.</div>
+    </div>
+    <div>
+      <div class="bium-footer-col-title">고객센터</div>
+      <div class="bium-footer-phone">010-6548-8753</div>
+      <div class="bium-footer-hours">평일 오전 9시 - 오후 6시<br>토요일 오전 9시 - 오후 3시<br>일요일 및 공휴일 휴무</div>
+      <div class="bium-footer-btns">
+        <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="bium-footer-btn kakao">💬 카카오톡 문의</a>
+        <a href="https://forms.gle/9FBjxBR5zf9Xhvtw6" target="_blank" class="bium-footer-btn">📋 견적 문의</a>
+      </div>
+    </div>
+    <div>
+      <div class="bium-footer-col-title">서비스 안내</div>
+      <div class="bium-footer-hours"><strong style="color:#333">서비스 지역</strong><br>서울 · 경기 전 지역<br><br><strong style="color:#333">제공 서비스</strong><br>철거 · 설비 · 타일 · 도기세팅 · 폐기물처리<br>5IN1 원스톱 리모델링</div>
+    </div>
+  </div>
+  <div class="bium-footer-links">
+    <a href="#">이용약관</a>
+    <a href="#">개인정보처리방침</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('biumMobileMenu').classList.toggle('open');}
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(function(el){observer.observe(el);});
+</script>
+</body>
+</html>

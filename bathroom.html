@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>욕실 패키지 — 비움앤타일 파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Pretendard', -apple-system, sans-serif; color: #1A1A1A; background: #fffdf9; overflow-x: hidden; }
+:root { --gold: #B8963C; --gold-light: #D4AF5A; --green: #2D6A4F; }
+
+.bium-header { background: #111111; width: 100%; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+.bium-header-inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.bium-logo img { height: 36px; width: auto; display: block; }
+.bium-nav { display: flex; align-items: center; gap: 36px; list-style: none; }
+.bium-nav a { color: #ccc; text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; transition: color 0.2s; white-space: nowrap; }
+.bium-nav a:hover { color: #fff; }
+.bium-nav .nav-cta a { background: #B8963C; color: #fff; padding: 8px 20px; border-radius: 4px; font-weight: 600; }
+.bium-nav .nav-cta a:hover { background: #a07830; }
+.bium-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.bium-hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+.bium-mobile-menu { display: none; background: #111; border-top: 1px solid #222; }
+.bium-mobile-menu.open { display: block; }
+.bium-mobile-menu a { display: block; padding: 16px 40px; color: #ccc; text-decoration: none; font-size: 15px; border-bottom: 1px solid #1a1a1a; }
+.bium-mobile-menu a:hover { color: #fff; background: #1a1a1a; }
+@media (max-width: 768px) { .bium-nav { display: none; } .bium-hamburger { display: flex; } .bium-header-inner { padding: 0 20px; } }
+
+.bath-hero { line-height: 0; }
+.bath-hero img { width: 100%; height: auto; display: block; }
+
+.showroom-banner { background: #F7F3EA; color: #7A6030; padding: 18px 40px; display: flex; align-items: center; justify-content: center; gap: 16px; font-size: 13px; letter-spacing: 0.3px; border-top: 1px solid #EAE0CC; border-bottom: 1px solid #EAE0CC; flex-wrap: wrap; text-align: center; }
+.showroom-banner strong { color: var(--gold); font-weight: 700; }
+.showroom-banner-divider { color: #D4B878; }
+@media (max-width: 768px) { .showroom-banner-divider { display: none; } .showroom-banner span { width: 100%; } }
+
+.packages-section { max-width: 1200px; margin: 0 auto; padding: 80px 40px; background: #fffdf9; }
+.packages-header { text-align: center; margin-bottom: 56px; }
+.packages-header-label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.packages-header-title { font-family: 'Pretendard', -apple-system, sans-serif; font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: #111; letter-spacing: -0.5px; }
+
+/* ===== 슬라이더 ===== */
+.pkg-slider-wrap {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  perspective: 1200px;
+}
+.pkg-slider-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.pkg-card {
+  position: absolute;
+  top: 0;
+  width: 52%;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  border: 1.5px solid #E8E8E8;
+  background: #fff;
+}
+
+/* 활성 카드 — 앞으로 크게 */
+.pkg-card.active {
+  left: 50%;
+  transform: translateX(-50%) scale(1) translateZ(0);
+  z-index: 10;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+  border-color: #C8A84A;
+  width: 54%;
+}
+/* 왼쪽 뒤 */
+.pkg-card.prev {
+  left: 2%;
+  transform: scale(0.82) translateZ(-80px);
+  z-index: 5;
+  filter: brightness(0.75);
+  width: 46%;
+}
+/* 오른쪽 뒤 */
+.pkg-card.next {
+  left: auto;
+  right: 2%;
+  transform: scale(0.82) translateZ(-80px);
+  z-index: 5;
+  filter: brightness(0.75);
+  width: 46%;
+}
+
+.pkg-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 65%;
+  overflow: hidden;
+  background: #F5F3F0;
+  display: block;
+}
+.pkg-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+.pkg-card.active .pkg-card-img-wrap img { transform: scale(1.03); }
+
+/* 카드 내 이미지 슬라이드 */
+.img-slider { position: relative; width: 100%; height: 100%; display: block; }
+.img-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.img-slide.active { opacity: 1; }
+.img-slide:nth-child(2) {
+  object-fit: contain;
+  object-position: center;
+  background: #f0ebe8;
+}
+.img-nav {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 20;
+  display: flex;
+  gap: 6px;
+}
+.img-nav-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+.img-nav-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.img-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  gap: 5px;
+}
+.img-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.img-dot.active { background: #fff; width: 14px; border-radius: 3px; }
+.pkg-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%);
+  pointer-events: none;
+}
+.pkg-card-tier {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+}
+.pkg-card.basic    .pkg-card-tier { background: rgba(255,255,255,0.85); color: #555; }
+.pkg-card.standard .pkg-card-tier { background: rgba(184,150,60,0.9);   color: #fff; }
+.pkg-card.signature .pkg-card-tier { background: rgba(17,17,17,0.85);   color: #D4AF5A; border: 1px solid rgba(212,175,90,0.4); }
+
+.pkg-card-name-overlay {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+}
+.pkg-card-name-en {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.pkg-card-body { padding: 20px 22px 22px; }
+.pkg-card-tagline { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 6px; }
+.pkg-card-desc { font-size: 12px; color: #888; line-height: 1.7; margin-bottom: 14px; word-break: keep-all; }
+.pkg-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.pkg-tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background: #F5F5F5; color: #666; }
+.pkg-card.standard .pkg-tag { background: #FBF6EC; color: #9A7020; }
+.pkg-card.signature .pkg-tag { background: #F2F2F2; color: #333; }
+.pkg-card-footer { border-top: 1px solid #F0F0F0; padding-top: 14px; display: flex; align-items: center; justify-content: space-between; }
+.pkg-card-coming { font-size: 11px; font-weight: 600; letter-spacing: 1px; color: #BBBBBB; text-transform: uppercase; }
+.pkg-card-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--gold); cursor: pointer; background: none; border: none; transition: gap 0.2s; }
+.pkg-card-btn:hover { gap: 10px; }
+
+/* 비활성 카드 본문 숨김 */
+.pkg-card.prev .pkg-card-body,
+.pkg-card.next .pkg-card-body { display: none; }
+.pkg-card.prev .pkg-card-img-wrap,
+.pkg-card.next .pkg-card-img-wrap { height: 100%; }
+
+/* 인디케이터 */
+.pkg-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.pkg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #DDD;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.pkg-dot.active {
+  background: var(--gold);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* 화살표 */
+.pkg-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid #E8E8E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.pkg-arrow:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(184,150,60,0.2); }
+.pkg-arrow.left { left: -20px; }
+.pkg-arrow.right { right: -20px; }
+
+@media (max-width: 900px) {
+  .pkg-slider-wrap { height: auto; perspective: none; }
+  .pkg-card { position: relative; width: 100% !important; left: auto !important; right: auto !important;
+    transform: none !important; filter: none !important; display: none; border-color: #C8A84A; }
+  .pkg-card.active { display: block; }
+  .pkg-card-img-wrap { height: 260px !important; }
+  .pkg-card.prev .pkg-card-body, .pkg-card.next .pkg-card-body { display: block; }
+  .pkg-arrow { display: flex; }
+  .pkg-arrow.left { left: 8px; }
+  .pkg-arrow.right { right: 8px; }
+  .bium-footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .bium-footer { padding: 40px 20px 32px; }
+}
+@media (max-width: 768px) {
+  .bath-hero img { height: auto; }
+  .packages-section { padding: 56px 20px; }
+  .showroom-banner { flex-direction: column; gap: 6px; padding: 16px 20px; text-align: center; }
+  .showroom-banner-divider { display: none; }
+}
+
+.bium-footer { background: #F5F5F5; border-top: 1px solid #E0E0E0; padding: 60px 40px 40px; }
+.bium-footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 48px; }
+.bium-footer-logo { font-size: 15px; font-weight: 800; letter-spacing: 1.5px; color: #1A1A1A; text-transform: uppercase; margin-bottom: 16px; }
+.bium-footer-info { font-size: 13px; color: #666; line-height: 2; }
+.bium-footer-info strong { color: #333; }
+.bium-footer-copy { font-size: 12px; color: #999; margin-top: 20px; }
+.bium-footer-col-title { font-size: 14px; font-weight: 700; color: #1A1A1A; margin-bottom: 16px; }
+.bium-footer-phone { font-size: 28px; font-weight: 800; color: #1A1A1A; letter-spacing: -0.5px; margin-bottom: 8px; }
+.bium-footer-hours { font-size: 13px; color: #777; line-height: 1.9; margin-bottom: 20px; }
+.bium-footer-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.bium-footer-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: 1.5px solid #ccc; border-radius: 4px; font-size: 13px; font-weight: 600; color: #333; text-decoration: none; background: #fff; transition: all 0.2s; }
+.bium-footer-btn:hover { border-color: #333; color: #111; }
+.bium-footer-btn.kakao { background: #F9E000; border-color: #F9E000; color: #111; }
+.bium-footer-btn.kakao:hover { background: #F0D800; }
+.bium-footer-links { border-top: 1px solid #E0E0E0; margin-top: 40px; padding-top: 24px; display: flex; gap: 24px; flex-wrap: wrap; }
+.bium-footer-links a { font-size: 12px; color: #888; text-decoration: none; }
+.bium-footer-links a:hover { color: #333; }
+
+.bath-cta { line-height: 0; }
+
+/* ===== 안내 섹션 ===== */
+.bath-intro {
+  background: #fffdf9;
+  padding: 80px 40px 72px;
+  text-align: center;
+  border-bottom: 1px solid #EAE6E0;
+}
+.bath-intro-inner { max-width: 600px; margin: 0 auto; }
+.bath-intro-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #B0A080;
+  margin-bottom: 24px;
+}
+.bath-intro-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}
+.bath-intro-divider {
+  width: 1px;
+  height: 32px;
+  background: #CCC;
+  margin: 0 auto 24px;
+}
+.bath-intro-desc {
+  font-size: 14px;
+  color: #888;
+  line-height: 1.9;
+  margin-bottom: 28px;
+  word-break: keep-all;
+}
+.bath-intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: #B8963C;
+  text-transform: uppercase;
+}
+@media (max-width: 768px) {
+  .bath-intro { padding: 56px 24px 52px; }
+  .bath-intro-title { font-size: 28px; }
+}
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) { .bium-footer-inner { grid-template-columns: 1fr; gap: 32px; } .bium-footer { padding: 40px 20px 32px; } }
+@media (max-width: 768px) { .packages-section { padding: 56px 20px; } .showroom-banner { flex-direction: column; gap: 6px; padding: 16px 20px; text-align: center; } .showroom-banner-divider { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/index.html" class="bium-logo">
+      <img src="data:image/png;base64,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" alt="VE:UM & TILE" style="height:36px;width:auto;display:block;">
+    </a>
+    <nav>
+      <ul class="bium-nav">
+        <li><a href="/package.html">시공 패키지</a></li>
+        <li><a href="/bathroom.html">욕실 패키지</a></li>
+        <li><a href="/gallery.html">시공 사례</a></li>
+        <li class="nav-cta"><a href="/contact.html">견적 문의</a></li>
+      </ul>
+    </nav>
+    <div class="bium-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+  <div class="bium-mobile-menu" id="biumMobileMenu">
+    <a href="/package.html">시공 패키지</a>
+    <a href="/bathroom.html">욕실 패키지</a>
+    <a href="/gallery.html">시공 사례</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</header>
+
+<section class="bath-hero">
+  <img src="./images/bathroom-hero.png" alt="원패스 욕실 패키지 쇼룸 오픈 준비 중">
+</section>
+
+<!-- 섹션1: 준비중 안내 이미지 -->
+<div style="line-height:0; background:#fffdf9; text-align:center;">
+  <img src="./images/bathroom-s1.png" alt="원패스욕실 패키지 쇼룸을 준비하고 있습니다" style="width:70%; height:auto; display:inline-block;">
+</div>
+
+<!-- 라인업 제목 이미지 -->
+<div style="line-height:0; background:#fffdf9; text-align:center;">
+  <img src="./images/bathroom-lineup.png" alt="3가지 패키지 라인업" style="width:70%; height:auto; display:inline-block;">
+</div>
+
+
+
+<section class="packages-section">
+
+  <div class="pkg-slider-wrap fade-up">
+    <div class="pkg-slider-track" id="pkgTrack">
+
+      <!-- BASIC -->
+      <div class="pkg-card basic active" data-index="0" onclick="goToSlide(0)">
+        <div class="pkg-card-img-wrap">
+          <div class="img-slider">
+            <img class="img-slide active" src="./images/bathroom-basic.png" alt="BASIC 패키지">
+            <img class="img-slide" src="./images/basic-hover.png" alt="BASIC 패키지 구성">
+            <div class="img-dots">
+              <div class="img-dot active" onclick="slideImg(event,this,0)"></div>
+              <div class="img-dot" onclick="slideImg(event,this,1)"></div>
+            </div>
+            <div class="img-nav">
+              <button class="img-nav-btn" onclick="slideImgNav(event,this,-1)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M6 2L3 5L6 8" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="img-nav-btn" onclick="slideImgNav(event,this,1)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M4 2L7 5L4 8" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="pkg-card-overlay"></div>
+          <div class="pkg-card-tier">Basic</div>
+          <div class="pkg-card-name-overlay">
+            <div class="pkg-card-name-en">BASIC</div>
+          </div>
+        </div>
+        <div class="pkg-card-body">
+          <div class="pkg-card-tagline">깔끔하게 완성된 기본 욕실</div>
+          <div class="pkg-card-desc">군더더기 없이, 꼭 필요한 기능만 담은 합리적인 기본 패키지.</div>
+          <div class="pkg-card-tags">
+            <span class="pkg-tag">300×600 타일</span>
+            <span class="pkg-tag">스탠드 세면대</span>
+            <span class="pkg-tag">원피스 양변기</span>
+            <span class="pkg-tag">슬라이딩 수납장</span>
+          </div>
+          <div class="pkg-card-footer">
+            <span class="pkg-card-coming">Coming Soon</span>
+            <button class="pkg-card-btn" onclick="window.open('http://pf.kakao.com/_XxbNjX/chat','_blank')">문의하기 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STANDARD -->
+      <div class="pkg-card standard next" data-index="1" onclick="goToSlide(1)">
+        <div class="pkg-card-img-wrap">
+          <div class="img-slider">
+            <img class="img-slide active" src="./images/bathroom-standard.png" alt="STANDARD 패키지">
+            <img class="img-slide" src="./images/standard-hover.png" alt="STANDARD 패키지 구성">
+            <div class="img-dots">
+              <div class="img-dot active" onclick="slideImg(event,this,0)"></div>
+              <div class="img-dot" onclick="slideImg(event,this,1)"></div>
+            </div>
+            <div class="img-nav">
+              <button class="img-nav-btn" onclick="slideImgNav(event,this,-1)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M6 2L3 5L6 8" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="img-nav-btn" onclick="slideImgNav(event,this,1)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M4 2L7 5L4 8" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="pkg-card-overlay"></div>
+          <div class="pkg-card-tier">Standard</div>
+          <div class="pkg-card-name-overlay">
+            <div class="pkg-card-name-en">STANDARD</div>
+          </div>
+        </div>
+        <div class="pkg-card-body">
+          <div class="pkg-card-tagline">실용성과 디자인을 모두 갖춘 욕실</div>
+          <div class="pkg-card-desc">일상의 편리함을 높여주는 균형 잡힌 스탠다드 패키지.</div>
+          <div class="pkg-card-tags">
+            <span class="pkg-tag">600×600 타일</span>
+            <span class="pkg-tag">백걸이 세면대</span>
+            <span class="pkg-tag">비데일체형</span>
+            <span class="pkg-tag">슬라이딩 수납장</span>
+          </div>
+          <div class="pkg-card-footer">
+            <span class="pkg-card-coming">Coming Soon</span>
+            <button class="pkg-card-btn" onclick="window.open('http://pf.kakao.com/_XxbNjX/chat','_blank')">문의하기 →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGNATURE -->
+      <div class="pkg-card signature" data-index="2" onclick="goToSlide(2)" style="display:none;">
+        <div class="pkg-card-img-wrap">
+          <div class="img-slider">
+            <img class="img-slide active" src="./images/bathroom-sig.png" alt="SIGNATURE 패키지">
+            <img class="img-slide" src="./images/signature-hover.png" alt="SIGNATURE 패키지 구성">
+            <div class="img-dots">
+              <div class="img-dot active" onclick="slideImg(event,this,0)"></div>
+              <div class="img-dot" onclick="slideImg(event,this,1)"></div>
+            </div>
+            <div class="img-nav">
+              <button class="img-nav-btn" onclick="slideImgNav(event,this,-1)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M6 2L3 5L6 8" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="img-nav-btn" onclick="slideImgNav(event,this,1)">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M4 2L7 5L4 8" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="pkg-card-overlay"></div>
+          <div class="pkg-card-tier">Signature</div>
+          <div class="pkg-card-name-overlay">
+            <div class="pkg-card-name-en">SIGNATURE</div>
+          </div>
+        </div>
+        <div class="pkg-card-body">
+          <div class="pkg-card-tagline">공간의 가치를 높이는 프리미엄 욕실</div>
+          <div class="pkg-card-desc">세련된 디자인과 차별화된 기능으로 완성하는 시그니처 패키지.</div>
+          <div class="pkg-card-tags">
+            <span class="pkg-tag">600×1200 타일</span>
+            <span class="pkg-tag">일체형 세라믹 상판</span>
+            <span class="pkg-tag">레인샤워</span>
+            <span class="pkg-tag">트렌치 유가</span>
+          </div>
+          <div class="pkg-card-footer">
+            <span class="pkg-card-coming">Coming Soon</span>
+            <button class="pkg-card-btn" onclick="window.open('http://pf.kakao.com/_XxbNjX/chat','_blank')">문의하기 →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 화살표 -->
+    <div class="pkg-arrow left" onclick="prevSlide()">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M11 4L6 9L11 14" stroke="#555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="pkg-arrow right" onclick="nextSlide()">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M7 4L12 9L7 14" stroke="#555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 인디케이터 -->
+  <div class="pkg-indicators">
+    <div class="pkg-dot active" onclick="goToSlide(0)"></div>
+    <div class="pkg-dot" onclick="goToSlide(1)"></div>
+    <div class="pkg-dot" onclick="goToSlide(2)"></div>
+  </div>
+</section>
+
+<div class="showroom-banner">
+  <span>📍 위 이미지는 <strong>예시 카탈로그</strong>이며, 실제 제품 색상·재질과 다를 수 있습니다</span>
+  <span class="showroom-banner-divider">|</span>
+  <span>견적은 <strong>현장 면적·구조·조건</strong>에 따라 달라질 수 있습니다</span>
+  <span class="showroom-banner-divider">|</span>
+  <span>정확한 견적은 <strong>현장 방문 후 안내</strong> · 문의 <strong>010-6548-8753</strong></span>
+</div>
+
+<section class="bath-cta fade-up" style="line-height:0; position:relative;">
+  <img src="./images/bathroomcta.png" alt="지금 바로 욕실 패키지 문의하세요" style="width:100%; height:auto; display:block;">
+  <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank"
+     style="position:absolute; left:28%; bottom:18%; width:22%; height:12%; display:block;"></a>
+  <a href="https://forms.gle/hktN1bN6bsx8ugiR9" target="_blank"
+     style="position:absolute; left:52%; bottom:18%; width:20%; height:12%; display:block;"></a>
+</section>
+
+<footer class="bium-footer">
+  <div class="bium-footer-inner">
+    <div>
+      <div class="bium-footer-logo">VE:UM &amp; TILE PARTNERS</div>
+      <div class="bium-footer-info">
+        <strong>비움앤타일 파트너스</strong><br>대표. 김영민<br>사업자등록번호. 362-65-00396<br>경기도 성남시 수정구 청계산로 1길 19 2층<br>Tel. 010-6548-8753<br>서울·경기 전 지역 서비스
+      </div>
+      <div class="bium-footer-copy">COPYRIGHT© 비움앤타일 파트너스. ALL RIGHTS RESERVED.</div>
+    </div>
+    <div>
+      <div class="bium-footer-col-title">고객센터</div>
+      <div class="bium-footer-phone">010-6548-8753</div>
+      <div class="bium-footer-hours">평일 오전 9시 - 오후 6시<br>토요일 오전 9시 - 오후 3시<br>일요일 및 공휴일 휴무</div>
+      <div class="bium-footer-btns">
+        <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="bium-footer-btn kakao">💬 카카오톡 문의</a>
+        <a href="https://forms.gle/hktN1bN6bsx8ugiR9" target="_blank" class="bium-footer-btn">📋 견적 문의</a>
+      </div>
+    </div>
+    <div>
+      <div class="bium-footer-col-title">서비스 안내</div>
+      <div class="bium-footer-hours">
+        <strong style="color:#333">서비스 지역</strong><br>서울 · 경기 전 지역<br><br>
+        <strong style="color:#333">제공 서비스</strong><br>철거 · 설비 · 타일 · 도기세팅 · 폐기물처리<br>5IN1 원스톱 리모델링
+      </div>
+    </div>
+  </div>
+  <div class="bium-footer-links">
+    <a href="#">이용약관</a>
+    <a href="#">개인정보처리방침</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() { document.getElementById('biumMobileMenu').classList.toggle('open'); }
+
+// 카드 내 이미지 슬라이더
+function slideImg(e, dotEl, idx) {
+  e.stopPropagation();
+  var wrap = dotEl.closest('.img-slider');
+  var slides = wrap.querySelectorAll('.img-slide');
+  var dots = wrap.querySelectorAll('.img-dot');
+  slides.forEach(function(s) { s.classList.remove('active'); });
+  dots.forEach(function(d) { d.classList.remove('active'); });
+  slides[idx].classList.add('active');
+  dots[idx].classList.add('active');
+}
+function slideImgNav(e, btn, dir) {
+  e.stopPropagation();
+  var wrap = btn.closest('.img-slider');
+  var slides = wrap.querySelectorAll('.img-slide');
+  var dots = wrap.querySelectorAll('.img-dot');
+  var current = 0;
+  slides.forEach(function(s, i) { if (s.classList.contains('active')) current = i; });
+  var next = (current + dir + slides.length) % slides.length;
+  slides.forEach(function(s) { s.classList.remove('active'); });
+  dots.forEach(function(d) { d.classList.remove('active'); });
+  slides[next].classList.add('active');
+  dots[next].classList.add('active');
+}
+
+// ===== 슬라이더 =====
+var current = 0;
+var total = 3;
+var cards = document.querySelectorAll('.pkg-card');
+var dots  = document.querySelectorAll('.pkg-dot');
+
+function goToSlide(n) {
+  if (n === current) return;
+  var prev = (n - 1 + total) % total;
+  var next = (n + 1) % total;
+
+  cards.forEach(function(c) {
+    c.classList.remove('active', 'prev', 'next');
+    c.style.display = 'none';
+  });
+  dots.forEach(function(d) { d.classList.remove('active'); });
+
+  // 3장 모두 보이게
+  cards[n].style.display = 'block';
+  cards[prev].style.display = 'block';
+  cards[next].style.display = 'block';
+
+  // 약간의 딜레이 후 클래스 적용 (트랜지션 효과)
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      cards[n].classList.add('active');
+      cards[prev].classList.add('prev');
+      cards[next].classList.add('next');
+      dots[n].classList.add('active');
+    });
+  });
+
+  current = n;
+}
+
+function nextSlide() { goToSlide((current + 1) % total); }
+function prevSlide() { goToSlide((current - 1 + total) % total); }
+
+// 초기 세팅
+(function() {
+  cards[0].style.display = 'block';
+  cards[1].style.display = 'block';
+  cards[2].style.display = 'none';
+  cards[0].classList.add('active');
+  cards[1].classList.add('next');
+  dots[0].classList.add('active');
+})();
+
+// 스크롤 페이드인
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up').forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>

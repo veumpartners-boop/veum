@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5IN1 시공 패키지 — 비움앤타일 파트너스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  color: #1A1A1A;
+  overflow-x: hidden;
+  background: #fff;
+}
+:root {
+  --gold: #B8963C;
+  --gold-light: #D4AF5A;
+  --dark: #111111;
+  --text2: #555555;
+}
+
+
+/* ===== 헤더 ===== */
+.bium-header {
+  background: #111111;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #222;
+}
+.bium-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bium-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bium-logo span {
+  color: #B8963C;
+}
+.bium-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bium-nav a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.bium-nav a:hover {
+  color: #fff;
+}
+.bium-nav .nav-cta a {
+  background: #B8963C;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.bium-nav .nav-cta a:hover {
+  background: #a07830;
+  color: #fff;
+}
+
+/* 모바일 햄버거 */
+.bium-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.bium-hamburger span {
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.bium-mobile-menu {
+  display: none;
+  background: #111;
+  border-top: 1px solid #222;
+}
+.bium-mobile-menu.open {
+  display: block;
+}
+.bium-mobile-menu a {
+  display: block;
+  padding: 16px 40px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid #1a1a1a;
+}
+.bium-mobile-menu a:hover { color: #fff; background: #1a1a1a; }
+
+@media (max-width: 768px) {
+  .bium-nav { display: none; }
+  .bium-hamburger { display: flex; }
+  .bium-header-inner { padding: 0 20px; }
+}
+
+/* ===== 푸터 ===== */
+.bium-footer {
+  background: #F5F5F5;
+  border-top: 1px solid #E0E0E0;
+  padding: 60px 40px 40px;
+}
+.bium-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 48px;
+}
+.bium-footer-logo {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.bium-footer-info {
+  font-size: 13px;
+  color: #666;
+  line-height: 2;
+}
+.bium-footer-info strong {
+  color: #333;
+}
+.bium-footer-copy {
+  font-size: 12px;
+  color: #999;
+  margin-top: 20px;
+}
+.bium-footer-col-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+.bium-footer-phone {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1A1A1A;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.bium-footer-hours {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.bium-footer-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bium-footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  background: #fff;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.bium-footer-btn:hover {
+  border-color: #333;
+  color: #111;
+}
+.bium-footer-btn.kakao {
+  background: #F9E000;
+  border-color: #F9E000;
+  color: #111;
+}
+.bium-footer-btn.kakao:hover { background: #F0D800; }
+
+.bium-footer-links {
+  border-top: 1px solid #E0E0E0;
+  margin-top: 40px;
+  padding-top: 24px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.bium-footer-links a {
+  font-size: 12px;
+  color: #888;
+  text-decoration: none;
+}
+.bium-footer-links a:hover { color: #333; }
+
+@media (max-width: 900px) {
+  .bium-footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .bium-footer { padding: 40px 20px 32px; }
+}
+
+
+/* 히어로 */
+.pkg-hero {
+  position: relative;
+  width: 100%;
+  height: 1071px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pkg-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pkg-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 0 24px;
+}
+.pkg-hero-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: block;
+}
+.pkg-hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+.pkg-hero-desc {
+  font-size: 17px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+  font-weight: 300;
+}
+@media (max-width: 768px) {
+  .pkg-hero { height: 400px; }
+  .pkg-hero-title { font-size: 34px; }
+}
+
+/* CTA */
+.pkg-cta {
+  background: var(--dark);
+  padding: 80px 48px;
+  text-align: center;
+}
+.pkg-cta-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+.pkg-cta-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+.pkg-cta-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.pkg-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.pkg-cta-btn.kakao {
+  background: #F9E000;
+  color: #111;
+}
+.pkg-cta-btn.kakao:hover { background: #F0D800; }
+.pkg-cta-btn.form {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+}
+.pkg-cta-btn.form:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* ===== 스크롤 페이드인 ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/index.html" class="bium-logo"><img src="data:image/png;base64,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" alt="VE:UM & TILE" style="height:36px;width:auto;display:block;"></a>
+    <nav>
+      <ul class="bium-nav">
+        <li><a href="/package.html">시공 패키지</a></li>
+        <li><a href="/bathroom.html">욕실 패키지</a></li>
+        <li><a href="CAFE24_GALLERY_URL" target="_blank">시공 사례</a></li>
+        <li class="nav-cta"><a href="/contact.html">견적 문의</a></li>
+      </ul>
+    </nav>
+    <div class="bium-hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="bium-mobile-menu" id="biumMobileMenu">
+    <a href="/package.html">시공 패키지</a>
+    <a href="/bathroom.html">욕실 패키지</a>
+    <a href="CAFE24_GALLERY_URL" target="_blank">시공 사례</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</header>
+
+
+<!-- 히어로 -->
+<section class="pkg-hero">
+  <img class="pkg-hero-img" src="images/package-hero.png" alt="5IN1 시공 패키지">
+  </section>
+
+<!-- 패키지 상세 이미지 1 -->
+<div class="fade-up" style="background:#fffcf9; padding:0; text-align:center; line-height:0;">
+  <img src="./images/package-detail.png"
+       alt="5in1 시공패키지 상세"
+       style="max-width:1200px; width:100%; height:auto; display:block; margin:0 auto;">
+</div>
+
+<!-- 패키지 상세 이미지 2 (SVG - 링크 포함) -->
+<div class="fade-up" style="background:#fffcf9; padding:0; text-align:center; line-height:0;">
+  <object data="./images/package-detail2.svg"
+          type="image/svg+xml"
+          style="max-width:1200px; width:100%; height:auto; display:block; margin:0 auto;">
+    <img src="./images/package-detail2.svg" alt="5in1 시공패키지 상세2" style="max-width:1200px; width:100%; height:auto; display:block; margin:0 auto;">
+  </object>
+</div>
+
+<!-- 패키지 상세 이미지 3 -->
+<div class="fade-up" style="background:#fffcf9; padding:0; text-align:center; line-height:0;">
+  <img src="./images/package-detail3.png"
+       alt="5in1 시공패키지 상세3"
+       style="max-width:1200px; width:100%; height:auto; display:block; margin:0 auto;">
+</div>
+
+
+<!-- CTA 이미지 -->
+<div class="fade-up" style="line-height:0;">
+  <object data="./images/packagecta.svg"
+          type="image/svg+xml"
+          style="width:100%; height:auto; display:block;">
+    <img src="./images/packagecta.svg" alt="견적 문의" style="width:100%; height:auto; display:block;">
+  </object>
+</div>
+
+<footer class="bium-footer">
+  <div class="bium-footer-inner">
+    <!-- 회사 정보 -->
+    <div>
+      <div class="bium-footer-logo">VE:UM &amp; TILE PARTNERS</div>
+      <div class="bium-footer-info">
+        <strong>비움앤타일 파트너스</strong><br>
+        대표. 김영민<br>
+        사업자등록번호. 362-65-00396<br>
+        경기도 성남시 수정구 청계산로 1길 19 2층<br>
+        Tel. 010-6548-8753<br>
+        서울·경기 전 지역 서비스
+      </div>
+      <div class="bium-footer-copy">
+        COPYRIGHT© 비움앤타일 파트너스. ALL RIGHTS RESERVED.
+      </div>
+    </div>
+
+    <!-- 고객센터 -->
+    <div>
+      <div class="bium-footer-col-title">고객센터</div>
+      <div class="bium-footer-phone">010-6548-8753</div>
+      <div class="bium-footer-hours">
+        평일 오전 9시 - 오후 6시<br>
+        토요일 오전 9시 - 오후 3시<br>
+        일요일 및 공휴일 휴무
+      </div>
+      <div class="bium-footer-btns">
+        <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="bium-footer-btn kakao">💬 카카오톡 문의</a>
+        <a href="https://forms.gle/hktN1bN6bsx8ugiR9" target="_blank" class="bium-footer-btn">📋 견적 문의</a>
+      </div>
+    </div>
+
+    <!-- 서비스 지역 -->
+    <div>
+      <div class="bium-footer-col-title">서비스 안내</div>
+      <div class="bium-footer-hours">
+        <strong style="color:#333">서비스 지역</strong><br>
+        서울 · 경기 전 지역<br><br>
+        <strong style="color:#333">제공 서비스</strong><br>
+        철거 · 설비 · 타일 · 도기세팅 · 폐기물처리<br>
+        5IN1 원스톱 리모델링
+      </div>
+    </div>
+  </div>
+
+  <div class="bium-footer-links">
+    <a href="#">이용약관</a>
+    <a href="#">개인정보처리방침</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  var menu = document.getElementById('biumMobileMenu');
+  menu.classList.toggle('open');
+}
+</script>
+
+
+
+<script>
+// ===== 스크롤 페이드인 =====
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(function(el) {
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>

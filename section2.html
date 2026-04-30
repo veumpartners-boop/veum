@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WHY VE:UM and Tile</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white:  #FFFFFF;
+  --bg:     #F8F8F8;
+  --text:   #1A1A1A;
+  --text2:  #555555;
+  --text3:  #888888;
+  --gold:   #B8963C;
+  --gold2:  #9A7D2E;
+  --border: #D4B86A;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  background: var(--white);
+  color: var(--text);
+  padding: 32px 60px 32px;
+  line-height: 1.6;
+}
+
+/* ── 섹션 헤더 ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.section-bar {
+  width: 5px;
+  height: 24px;
+  background: var(--gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.section-title em {
+  font-style: normal;
+  color: var(--gold2);
+}
+
+.section-desc {
+  font-size: 20px;
+  color: var(--text2);
+  line-height: 1.8;
+  margin-left: 17px;
+  margin-bottom: 52px;
+  font-weight: 400;
+}
+
+/* ── 카드 그리드 ── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── 카드 ── */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 40px 36px;
+  position: relative;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
+
+  /* 왼쪽 골드 곡선 border 효과 */
+  border: 1.5px solid #E8E8E8;
+  border-left: 4px solid var(--gold);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(184,150,60,0.15);
+  border-left-color: var(--gold2);
+}
+
+/* 왼쪽 곡선 장식선 — 포토샵 디자인의 곡선 라인 */
+.card::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 20px;
+  bottom: 20px;
+  width: 4px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--gold) 20%,
+    var(--gold) 80%,
+    transparent 100%
+  );
+  border-radius: 4px;
+}
+
+/* ── 카드 내용 ── */
+.card-eyebrow {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.card-divider {
+  width: 32px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+.card-desc {
+  font-size: 18px;
+  color: var(--text2);
+  line-height: 1.85;
+  font-weight: 400;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 900px) {
+  body { padding: 24px 32px 24px; }
+  .cards { grid-template-columns: 1fr; gap: 20px; }
+  .card { padding: 32px 28px; }
+  .section-title { font-size: 17px; }
+  .section-desc { font-size: 14px; }
+  .card-title { font-size: 19px; }
+  .card-desc { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 20px 20px 20px; }
+}
+
+/* ── 애니메이션 ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-header { animation: fadeUp 0.5s ease both; }
+.section-desc   { animation: fadeUp 0.5s 0.08s ease both; }
+.card:nth-child(1) { animation: fadeUp 0.5s 0.15s ease both; }
+.card:nth-child(2) { animation: fadeUp 0.5s 0.25s ease both; }
+.card:nth-child(3) { animation: fadeUp 0.5s 0.35s ease both; }
+</style>
+</head>
+<body>
+
+<!-- 섹션 헤더 -->
+<div class="section-header">
+  <div class="section-bar"></div>
+  <div class="section-title">WHY VE:UM and Tile ?&nbsp;&nbsp;왜 비움앤타일 일까요?</div>
+</div>
+<div class="section-desc">
+  욕실 공사에서 번거로운 과정들을 줄이고, 더 간편하게 진행할 수 있는 방식으로 설계했습니다.
+</div>
+
+<!-- 카드 3개 -->
+<div class="cards">
+
+  <div class="card">
+    <div class="card-eyebrow">One Team Process</div>
+    <div class="card-title">분야별 전문 시공팀</div>
+    <div class="card-divider"></div>
+    <div class="card-desc">
+      철거·설비·타일·도기 각 공정마다 전문팀이 투입됩니다. 각 분야 전문가가 최고의 효율과 결과를 만들기 위해 원팀으로 움직입니다.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-eyebrow">Simple Site Flow</div>
+    <div class="card-title">원스톱 시공 진행</div>
+    <div class="card-divider"></div>
+    <div class="card-desc">
+      일반 시공업체는 모든 공정을 별도로 진행해야합니다. 철거, 타일, 폐기물 처리를 각각 따로 맡길 필요가 없어 일정 조율과 현장 흐름이 단순해져 공사가 훨씬 수월합니다.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-eyebrow">Save Time &amp; Cost</div>
+    <div class="card-title">시간과 비용 절약</div>
+    <div class="card-divider"></div>
+    <div class="card-desc">
+      중간 연결 과정이 줄어들어 불필요한 시간과 비용을 아낄 수 있습니다.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// 📐 부모창에 높이 전달 (반응형 iframe용)
+// 높이 딱 한 번만 전송 (떨림 방지)
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'bium-height', height: height }, '*');
+  }, 500);
+});
+
+// 🔒 마우스 우클릭 & 복사 금지
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('selectstart', e => e.preventDefault());
+document.addEventListener('dragstart',   e => e.preventDefault());
+document.addEventListener('copy',        e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey && ['c','a','u','s'].includes(e.key.toLowerCase())) || e.key === 'F12') {
+    e.preventDefault();
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEUM PARTNERS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;min-height:100%;font-family:'Pretendard',-apple-system,sans-serif;overflow-x:hidden;background:#EDE8E0;}
+
+/* 배경 데코 텍스트 */
+.bg-deco{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+  padding:0 -40px;
+}
+.bg-deco-left{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(120px,16vw,220px);
+  font-weight:700;
+  color:rgba(0,0,0,0.045);
+  letter-spacing:-8px;
+  line-height:1;
+  user-select:none;
+  transform:translateX(-5%);
+}
+.bg-deco-right{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(120px,16vw,220px);
+  font-weight:700;
+  color:rgba(0,0,0,0.045);
+  letter-spacing:-8px;
+  line-height:1;
+  user-select:none;
+  transform:translateX(5%);
+}
+
+/* 전체 레이아웃 */
+.wrap{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:60px 40px;
+  gap:48px;
+}
+
+/* 로고 */
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+}
+.logo-wrap img{
+  height:120px;
+  width:auto;
+}
+
+/* 카드 그리드 */
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  width:100%;
+  max-width:1000px;
+}
+
+/* 카드 외부 래퍼 — 패딩으로 이미지 띄우기 */
+.card{
+  text-decoration:none;
+  display:block;
+  position:relative;
+}
+
+/* 이미지 컨테이너 */
+.card-img-wrap{
+  position:relative;
+  border-radius:24px;
+  overflow:hidden;
+  aspect-ratio:3/4;
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease;
+}
+.card:hover .card-img-wrap{
+  transform:translateY(-6px);
+  box-shadow:0 32px 80px rgba(0,0,0,0.25);
+}
+
+.card-img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:opacity 0.4s ease;
+}
+.card-img-dark{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 0.4s ease;
+}
+.card:hover .card-img{ opacity:0; }
+.card:hover .card-img-dark{ opacity:1; }
+
+/* 카드 콘텐츠 */
+.card-content{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:36px 32px;
+  background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+  border-radius:24px;
+}
+
+.card-eyebrow{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(212,175,90,0.9);
+  margin-bottom:12px;
+}
+.card-title{
+  font-family:'Pretendard',-apple-system,sans-serif;
+  font-size:clamp(28px,3vw,40px);
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-0.5px;
+  margin-bottom:10px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.3);
+}
+.card-desc{
+  font-size:14px;
+  color:rgba(255,255,255,0.88);
+  line-height:1.8;
+  margin-bottom:8px;
+  word-break:keep-all;
+  text-shadow:0 1px 4px rgba(0,0,0,0.3);
+}
+.card-tags{
+  font-size:11px;
+  color:rgba(255,255,255,0.5);
+  letter-spacing:0.3px;
+  margin-bottom:24px;
+}
+.card-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 24px;
+  border:1.5px solid rgba(255,255,255,0.55);
+  border-radius:8px;
+  font-size:13px;
+  font-weight:600;
+  color:#fff;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(8px);
+  transition:all 0.25s;
+  width:fit-content;
+  letter-spacing:0.3px;
+}
+.card:hover .card-btn{
+  background:rgba(255,255,255,0.22);
+  border-color:rgba(255,255,255,0.9);
+}
+
+/* 하단 카피 */
+.copy{
+  font-size:12px;
+  color:rgba(0,0,0,0.28);
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+/* 모바일 */
+@media(max-width:768px){
+  .wrap{ padding:40px 20px; gap:32px; }
+  .cards{ grid-template-columns:1fr; max-width:400px; }
+  .card-img-wrap{ aspect-ratio:3/3.2; }
+  .logo-wrap img{ height:88px; }
+  .card-content{ padding:24px 22px; }
+  .bg-deco{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- 배경 데코 텍스트 -->
+<div class="bg-deco">
+  <div class="bg-deco-left">비움</div>
+  <div class="bg-deco-right">타일</div>
+</div>
+
+<div class="wrap">
+
+  <!-- 로고 -->
+  <div class="logo-wrap">
+    <img src="./images/logo.png" alt="VE:UM & TILE PARTNERS">
+  </div>
+
+  <!-- 카드 -->
+  <div class="cards">
+
+    <!-- 비움박스 (왼쪽) -->
+    <a href="https://veum.kr" target="_blank" class="card card-veum">
+      <div class="card-img-wrap">
+        <img class="card-img" src="./images/index-veum.png" alt="비움박스">
+        <img class="card-img-dark" src="./images/index-veum-dark.png" alt="비움박스">
+        <div class="card-content">
+          <div class="card-eyebrow">Waste Box Rental Service</div>
+          <div class="card-title">비움박스</div>
+          <div class="card-desc">인테리어 공사 후 생기는 폐기물,<br>박스 대여부터 수거 및 처리까지</div>
+          <div class="card-tags">서울·경기 전지역 가능</div>
+          <div class="card-btn">비움박스 바로가기 →</div>
+        </div>
+      </div>
+    </a>
+
+    <!-- 비움앤타일 (오른쪽) -->
+    <a href="/package.html" class="card card-tile">
+      <div class="card-img-wrap">
+        <img class="card-img" src="./images/index-tile.png" alt="비움앤타일">
+        <img class="card-img-dark" src="./images/index-tile-dark.png" alt="비움앤타일">
+        <div class="card-content">
+          <div class="card-eyebrow">Remodelling · Tile Installation</div>
+          <div class="card-title">비움앤타일</div>
+          <div class="card-desc">철거부터 타일시공, 마감까지<br>한 번에 시공하는 통합시공 서비스</div>
+          <div class="card-tags">철거·설비·타일시공·도기세팅·폐기물수거</div>
+          <div class="card-btn">비움앤타일 바로가기 →</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="copy">© 2021 VEUM & TILE PARTNERS</div>
+
+</div>
+
+</body>
+</html>

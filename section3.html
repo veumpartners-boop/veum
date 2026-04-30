@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>비움앤타일 파트너스만의 5in1</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --text:  #1A1A1A;
+  --text2: #555555;
+  --gold:  #B8963C;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  background: var(--white);
+  color: var(--text);
+  padding: 32px 60px 32px;
+}
+
+/* ── 섹션 헤더 ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 60px;
+}
+.section-bar {
+  width: 5px; height: 24px;
+  background: var(--gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.section-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.section-title strong {
+  font-weight: 800;
+}
+
+/* ── 아이템 그리드 ── */
+.items {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+
+/* ── 원형 이미지 ── */
+.item-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: none;
+  background: transparent;
+}
+
+.item:hover .item-circle {
+  transform: none;
+  box-shadow: none;
+}
+
+.item-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── 텍스트 ── */
+.item-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  transition: all 0.25s ease;
+}
+
+.item:hover .item-name {
+  font-size: 21px;
+  color: var(--gold);
+}
+
+/* ── 하단 설명 ── */
+.section-footer {
+  text-align: center;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid #EEEEEE;
+}
+
+.section-footer-text {
+  font-size: 16px;
+  color: var(--text2);
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: -0.2px;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 900px) {
+  body { padding: 24px 32px 24px; }
+  .items { flex-wrap: wrap; gap: 32px; justify-content: center; }
+  .item { flex: 0 0 calc(33% - 22px); }
+  .item-circle { width: 140px; height: 140px; }
+  .item-name { font-size: 16px; }
+  .section-footer-text { font-size: 14px; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 20px 20px 20px; }
+  .item { flex: 0 0 calc(50% - 12px); }
+  .item-circle { width: 120px; height: 120px; }
+  .item-name { font-size: 15px; }
+  .section-title { font-size: 17px; }
+  .section-footer-text { font-size: 13px; }
+  .section-header { margin-bottom: 40px; }
+}
+
+/* ── 애니메이션 ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.section-header  { animation: fadeUp 0.5s ease both; }
+.item:nth-child(1) { animation: fadeUp 0.5s 0.10s ease both; }
+.item:nth-child(2) { animation: fadeUp 0.5s 0.18s ease both; }
+.item:nth-child(3) { animation: fadeUp 0.5s 0.26s ease both; }
+.item:nth-child(4) { animation: fadeUp 0.5s 0.34s ease both; }
+.item:nth-child(5) { animation: fadeUp 0.5s 0.42s ease both; }
+.section-footer  { animation: fadeUp 0.5s 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<!-- 섹션 헤더 -->
+<div class="section-header">
+  <div class="section-bar"></div>
+  <div class="section-title">비움앤타일 파트너스만의 <strong>5in1</strong></div>
+</div>
+
+<!-- 아이템 5개 -->
+<div class="items">
+
+  <div class="item">
+    <div class="item-circle">
+      <img src="./images/1.png" alt="철거">
+    </div>
+    <div class="item-name">철거</div>
+  </div>
+
+
+  <div class="item">
+    <div class="item-circle">
+      <img src="./images/2.png" alt="설비">
+    </div>
+    <div class="item-name">설비</div>
+  </div>
+
+
+  <div class="item">
+    <div class="item-circle">
+      <img src="./images/3.png" alt="타일">
+    </div>
+    <div class="item-name">타일</div>
+  </div>
+
+
+  <div class="item">
+    <div class="item-circle">
+      <img src="./images/4.png" alt="도기세팅">
+    </div>
+    <div class="item-name">도기세팅</div>
+  </div>
+
+
+  <div class="item">
+    <div class="item-circle">
+      <img src="./images/5.png" alt="폐기물처리">
+    </div>
+    <div class="item-name">폐기물처리</div>
+  </div>
+
+</div>
+
+<!-- 하단 설명 -->
+<div class="section-footer">
+  <div class="section-footer-text">
+    각 공정의 비움앤타일 파트너스 전문가들이 하나의 시스템으로 움직입니다.
+  </div>
+</div>
+
+<script>
+// 📐 부모창에 높이 전달 (반응형 iframe용)
+// 높이 딱 한 번만 전송 (떨림 방지)
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var height = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'bium-height', height: height }, '*');
+  }, 500);
+});
+
+// 🔒 마우스 우클릭 & 복사 금지
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('selectstart', e => e.preventDefault());
+document.addEventListener('dragstart',   e => e.preventDefault());
+document.addEventListener('copy',        e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey && ['c','a','u','s'].includes(e.key.toLowerCase())) || e.key === 'F12') {
+    e.preventDefault();
+  }
+});
+</script>
+
+</body>
+</html>
