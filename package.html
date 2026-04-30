@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="./favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>5IN1 시공 패키지 — 비움앤타일 파트너스</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,7 @@ html, body {
   font-family: 'Pretendard', -apple-system, sans-serif;
   color: #1A1A1A;
   overflow-x: hidden;
-  background: #fff;
+  background: #fffcf9;
 }
 :root {
   --gold: #B8963C;
@@ -234,50 +235,15 @@ html, body {
 .pkg-hero {
   position: relative;
   width: 100%;
-  height: 1071px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
 .pkg-hero-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
-}
-.pkg-hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: #fff;
-  padding: 0 24px;
-}
-.pkg-hero-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 4px;
-  color: var(--gold-light);
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  display: block;
-}
-.pkg-hero-title {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 52px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -1px;
-  margin-bottom: 20px;
-}
-.pkg-hero-desc {
-  font-size: 17px;
-  color: rgba(255,255,255,0.8);
-  line-height: 1.7;
-  font-weight: 300;
 }
 @media (max-width: 768px) {
-  .pkg-hero { height: 400px; }
   .pkg-hero-title { font-size: 34px; }
 }
 
@@ -388,7 +354,7 @@ html, body {
 <div class="fade-up" style="background:#fffcf9; padding:0; text-align:center; line-height:0;">
   <object data="./images/package-detail2.svg"
           type="image/svg+xml"
-          style="max-width:1200px; width:100%; height:auto; display:block; margin:0 auto;">
+          style="max-width:1200px; width:100%; display:block; margin:0 auto; aspect-ratio:auto;">
     <img src="./images/package-detail2.svg" alt="5in1 시공패키지 상세2" style="max-width:1200px; width:100%; height:auto; display:block; margin:0 auto;">
   </object>
 </div>
@@ -405,7 +371,7 @@ html, body {
 <div class="fade-up" style="line-height:0;">
   <object data="./images/packagecta.svg"
           type="image/svg+xml"
-          style="width:100%; height:auto; display:block;">
+          style="width:100%; display:block; aspect-ratio:auto;">
     <img src="./images/packagecta.svg" alt="견적 문의" style="width:100%; height:auto; display:block;">
   </object>
 </div>
