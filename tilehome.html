@@ -108,8 +108,12 @@ html, body { width: 100%; overflow-x: hidden; background: #fff; font-family: 'Pr
   text-transform: uppercase;
   white-space: nowrap;
 }
-.bium-logo img {
-  mix-blend-mode: lighten;
+.bium-header-inner nav {
+  display: flex;
+  align-items: center;
+}
+.bium-hamburger span {
+  mix-blend-mode: normal !important;
 }
 .bium-logo span {
   color: #B8963C;
@@ -162,17 +166,22 @@ html, body { width: 100%; overflow-x: hidden; background: #fff; font-family: 'Pr
 
 /* 모바일 햄버거 */
 .bium-hamburger {
-  display: none;
+  display: none !important;
   flex-direction: column;
-  gap: 5px;
+  justify-content: center;
+  gap: 6px;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
 }
 .bium-hamburger span {
-  width: 24px;
-  height: 2px;
+  width: 26px;
+  height: 2.5px;
   background: #fff;
   border-radius: 2px;
+  display: block;
+  flex-shrink: 0;
   transition: all 0.3s;
 }
 .bium-mobile-menu {
@@ -195,7 +204,7 @@ html, body { width: 100%; overflow-x: hidden; background: #fff; font-family: 'Pr
 
 @media (max-width: 768px) {
   .bium-nav { display: none; }
-  .bium-hamburger { display: flex; }
+  .bium-hamburger { display: flex !important; }
   .bium-header-inner { padding: 0 20px; }
 }
 
