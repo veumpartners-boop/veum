@@ -219,7 +219,7 @@ html,body{width:100%;min-height:100%;font-family:'Pretendard',-apple-system,sans
   <div class="cards">
 
     <!-- 비움박스 (왼쪽) -->
-    <a href="https://veum.kr" target="_blank" class="card card-veum">
+    <a href="https://box.veum.kr" target="_blank" class="card card-veum">
       <div class="card-img-wrap">
         <img class="card-img" src="./images/index-veum.png" alt="비움박스">
         <img class="card-img-dark" src="./images/index-veum-dark.png" alt="비움박스">
@@ -234,7 +234,7 @@ html,body{width:100%;min-height:100%;font-family:'Pretendard',-apple-system,sans
     </a>
 
     <!-- 비움앤타일 (오른쪽) -->
-    <a href="/tilehome.html" class="card card-tile">
+    <a href="https://tile.veum.kr" onclick="handleTileLink(event)" class="card card-tile">
       <div class="card-img-wrap">
         <img class="card-img" src="./images/index-tile.png" alt="비움앤타일">
         <img class="card-img-dark" src="./images/index-tile-dark.png" alt="비움앤타일">
@@ -253,6 +253,24 @@ html,body{width:100%;min-height:100%;font-family:'Pretendard',-apple-system,sans
   <div class="copy">© 2021 VEUM & TILE PARTNERS</div>
 
 </div>
+
+<script>
+function handleTileLink(e) {
+  e.preventDefault();
+  var img = new Image();
+  var done = false;
+  img.onload = function() {
+    if (!done) { done = true; window.location.href = 'https://tile.veum.kr'; }
+  };
+  img.onerror = function() {
+    if (!done) { done = true; window.location.href = '/tilehome.html'; }
+  };
+  img.src = 'https://tile.veum.kr/favicon.ico?' + Date.now();
+  setTimeout(function() {
+    if (!done) { done = true; window.location.href = '/tilehome.html'; }
+  }, 2000);
+}
+</script>
 
 </body>
 </html>
