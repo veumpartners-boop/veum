@@ -376,5 +376,13 @@ function toggleMenu() {
 }
 </script>
 
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  if ((e.ctrlKey && ["c","a","u","s"].includes(e.key.toLowerCase())) || e.key === "F12") e.preventDefault();
+});
+</script>
 </body>
 </html>

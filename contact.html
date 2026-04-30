@@ -262,5 +262,13 @@ function toggleMenu(){document.getElementById('biumMobileMenu').classList.toggle
 var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-up').forEach(function(el){observer.observe(el);});
 </script>
+
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  if ((e.ctrlKey && ["c","a","u","s"].includes(e.key.toLowerCase())) || e.key === "F12") e.preventDefault();
+});
+</script>
 </body>
 </html>
