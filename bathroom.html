@@ -566,7 +566,7 @@ html, body { font-family: 'Pretendard', -apple-system, sans-serif; color: #1A1A1
       </div>
 
       <!-- SIGNATURE -->
-      <div class="pkg-card signature" data-index="2" onclick="goToSlide(2)" style="display:none;">
+      <div class="pkg-card signature" data-index="2" onclick="goToSlide(2)">
         <div class="pkg-card-img-wrap">
           <div class="img-slider">
             <img class="img-slide active" src="./images/bathroom-sig.png" alt="SIGNATURE 패키지">
@@ -816,9 +816,10 @@ function prevSlide() { goToSlide((current - 1 + total) % total); }
 (function() {
   cards[0].style.display = 'block';
   cards[1].style.display = 'block';
-  cards[2].style.display = 'none';
+  cards[2].style.display = 'block';
   cards[0].classList.add('active');
   cards[1].classList.add('next');
+  cards[2].classList.add('prev');
   dots[0].classList.add('active');
 })();
 
