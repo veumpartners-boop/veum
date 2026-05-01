@@ -125,6 +125,68 @@ html,body{font-family:'Pretendard',-apple-system,sans-serif;background:#fffdf9;c
 .bium-footer-btn { color: #333; }
 .bium-footer-links a { color: #888; }
 .bium-footer-links a:hover { color: #333; }
+
+/* ===== 모달 ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin: 0;
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+.modal-close:hover { color: #1A1A1A; }
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.8;
+}
+.modal-body h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin: 20px 0 8px;
+}
+.modal-body h4:first-child { margin-top: 0; }
+.modal-body p { margin: 0 0 8px; }
+.modal-body ul { margin: 0 0 8px; padding-left: 20px; }
+.modal-body ul li { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -132,7 +194,7 @@ html,body{font-family:'Pretendard',-apple-system,sans-serif;background:#fffdf9;c
 <header class="bium-header">
   <div class="bium-header-inner">
     <a href="/tilehome.html" class="bium-logo">
-      <img src="./images/title.png" alt="VE:UM & TILE" style="height:36px;width:auto;display:block;">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAAoCAIAAAA0fiJLAAAaCElEQVR4nO18eZhV1ZXvb+99xntvzSWD2jJIkNeAImh1WVUyVEUghCBJKyVRBu0nPsinGDW2TUwQkLwmQ/frmBhjYowJJv1UBGWSmZQFVNEgEcKgPlBoB0SKgqq69557hr3fH6tqeykGqWqCnW7Wd7/67j1nnz2s/dtrPgV0ilzXpS+GYZzjI0IIAJZlAWCMdW7cz4FY2wccMACTwWQwGPind8ABDpiADcSBOGC2PssBAYi2Ju36/Mthw5+dGGOPPPLIK6+8MmjQIM65vnim9hp5juNciPmddzojsNoBg+4agAmYrSBibdjiJ7e+CKzT0po1a5RSP/3pT7XcOheKx+MAGGMdeurzp/bAog8/6Vb2h2d9WnGj0WZkSS1+EgQvEoAHH3wwmUwePnz4iiuuEEJ8pl7Tgg0AYyz7518AtUKq3ecMqGqHLQAwgTiQCyQAF9CWAwfck6/89ybOeXFxcUNDg1Jq0qRJaDOezkR0l8DHGKOfsVjsgkz2vNDJkDqTcPpU2dmA2yafTMAFcoFCIB+InwKs+EVgtZJpmpzz5557Tim1atUqzrlpmmdpTzaWEIJzfnYI/melc5NSrB2wjLanjDaJlfupfPpURRoXVWErcc5d1y0vL/c8r7m5ubS09FwkltaYXbp0ufnmm6+66qoLNN3/MDFwpve+naBqBRM/ozYU2tIyALtVjJ3ayUXS1Ldv3927d0sp586di88KOui7nPMZM2b4vr9ixYoLMcvzQZ+6btmgacXTKVY5A2v7nEZLnlaN/hcFVmfksGmab7/99ksvvRRF0eTJk+PxeBiGAPLy8qgBBatOJdd1hw4dyjn/+OOPARiGka1GtROQbd23M9HoymllJGOM1DT1QF/0lWxwA7Btmx457VRJa7f2YLRGpGybEwiEaQEc3IISgAkIgDFAcJiAqQyhTK5sIW0mbUhuWeLTgBYDAMMAFKBgGuAMjDGaHudcf6Hp6WnT2g3D0FzKZgJ9p4CO5kA2S89CehTiyZnG/cx+zhtVVVV5npdKpb7+9a/rRbabAW0bzdg0zb59++7Zs0cpNWHCBL33AGKxGDGFlpQdSkUb19qZaAQjYrQQQgNU+weMsXZszb6lp0r96Aan7gQDYq6ZLasMxwYzANcwcoE4Zy4Dd01uABZgAwVWwoJtImEiJ2bnAzAdwAAEDEefZZ6I52fbWHp1lmVlz8Q0zewtRxYC9LHRlgYx7VxChqZpZvMNJ5/h04775yW9wbZt19TUKKV+/etfZ0+XwlQ6WKWlgmmao0eP9n0/lUr17NkTWazUCMsOXpz2rj6I7ZbKObcsix7R7NZcc103+6wTv7Jlg+7z1G4FBwMME1wADMLkYLwtiBBncB3hWgz5MTgcDkMMiAEOYAMWzFyrgJHBLlo/zIBp2oDLke9aXQVvBQHNXwstZAGIiOBCi6JD0k6c0LPZEvocQ4bxeDxbIpx23AtBOi0zc+ZMpdSBAwcGDBiQvXPtglW034ZhfPvb31ZKrV+/Pjc3F22bSosnthLXTNPUmKCWem3ETY05CrpqRpwqsdspTe1J6C+9evXKz8/PBrSGV+vmAdddNxgMpsXAYFgmmCFE3LYLANdiTqug4ihw8ddX4u9uv3zG1N63jLmkRzfkWLAAAcTdXApV8LaAaE6isM1VNGkV2aQ1NbGImICTjytOPnKnLvYz9VcsFtMwpUG13jjTuH9eolHj8XjPnj0bGhqCIPjmN79Jp41zPmzYsFmzZnXv3l0vm4RcTk5ObW2tUuqhhx7SnRAvlFJBENDfKIqklPSTaOjQoTiZTcQIx3FKSkqUUul0et68eVp1WpaVrRFGjBhB/ZSXl+se9E5MmTLl/vvvx8mi6+SoL6+pqQUABssxwWCYFKayGcyEZVmAw/GFHpj1wJCliyYueaFs8YtXL3px0OLFI0aORH4eLAEBE8iPO5cBJhhYqwLkta/Xh6FUSmUyGb1kKaVSKgxDpdSaNWvagayqqoraDB8+nOR0Np/nzZtHnRC7ToWspvnz5x8/fjyKImI7DZfJZM40bodB0tEHXNeVUgLwff+9995bsWIF57yystKyLCml67rTp0//7ne/O3HiRCkl7Z+UMoqirl27Xn/99QD++Mc/ou1QRlFkGIbv+1qqc85pa2mFelA9Ab1UKWV+fj4Ax3GiKPJ9nxr4vk/fPc8zDEMplUwmARC7ieNRFHHOoygaPnz4N77xDdM0s5UgbS3xZ9xXxt9YUT7g6oEAokhB8SiKAAjAtbjv+4xBMIwa2euaay9H1GSq+PEjKVNkLOvYzPuHXdkXQgAIOKykJwGLC6YUmIDjGH6QFoJFUWRZlj45tNPassxkMrRqKaVpmp7nUbMgCGixUkptIaTTadodcqdo4aelMAzz8vLoQaWUEIKmcaZxO4qTDlv7NB4tTAixdOnSiRMnVlZWXn/99TU1Nclk8qOPPrJtu7q6+sknn6RF0k5cd911lmW99dZbBw8eNE0znU5TP0opEjDvv//+rl27SOzF43Faajqdbmxs1I1N0yQ+EpLoehiGBJRYLNbS0kJ80UMLIejgkhggla2UIgSXlZX16dNn9OjRy5Yt02skVDHGHMd96KFvZTLyy2NufmvfO4HvA1BSApCIoCIGWDa6d8FNI0vycv3lS+oW/bohnUZOVzz0nd7Fl4opU6/+1v07GcCgJCQgGVOOAy+NAPLftu3wfd80hW3blmVdc801pmnW19cbhtHU1MQYe/PNN03TDIKA/gZBEIvFMpmMbdv6hNMtAJZl0bo8z6PjxxgjhJ1KtCkAli1blpubyzlPpVKO4wRBcNpxO4qTzpCWH5Zl5efn79+/Xyn18MMP05Xy8vJMJqOUuvbaa5FlSD3xxBNKqeeff95xnGyfHwAJlblz5zLGtJqnW4lEgjpp58rRRVJzUsp58+bp6el8EXU1dOhQ0g4VFRXZXrRhGF27dqVbixYt0o9rye84Tpcu3ZRUSqp//f1LAIRgnIMLE+AM3GSwgLiJa/ph2cvjlr90/Y0DcQlQDFxqYeoErFhe8vLLQ2MGYgIMuUARNxOt0XgBw6SQaWvqorKy8lTV384LEUIMGzaMmpWVlWUbVdRyzpw5WeL2bDRnzhzqh/SpZteZxv3MDttRh1WhZVnpdJpG8n3f87zf/OY3Usrbbrvt8ssvl1Lu27fvjTfeADBq1CiSHI7jMMYqKysBbNu2LZPJ0FHT61dKxWIxEsie5wkhlFJ05lpaWoQQmll0zqglXaSWYRhqLKZSKTLA9cGlR0zTpONL/SulJk+eTGdx3Lhxffr0yV4jPT7rHx6lKVZVDrUtBqmUgpSBYYAJESgegHMB2wZXnoF0ThxcIADSPvJy8hClg2SzCGGqBAdnQkmZgmjVEyT5GGMkJDRPiLc0VbqoBUYURSRu0Sa80QYCukjcoL84a5hAa0wpJX0nJUuczI5rELs6ipMOA4vsIdpgUvlr165Np9PXXntt3759wzBsaGhYtWoVgDvuuIMcYM/zrr766j59+qTT6Z07d7YrdkDW+rPltlLKtm19i+QQrZBUYeeMSkIkDVpSUkKH0jCMGTNmkLcopaQ15uTkTJo0SUaAQmFR/tUD+tkWOCA4wkjKSAFCwcx42LsLqeMGV9aE6ssCAAwjvmh+eeyo0De3bX8nnoAnI4mMipJQHAoIAAUgNIUCZCdW8R8nwzCam5tJPhFDkBVxJD7TqSZ3qqP9dz4DqoG8adOmuro6ABMmTKDt37p1ayqV6t+/f3l5OWGltLTUsqz9+/fv2LGDMME5931fH4VsAa5N6XQ6rZQiOymVSumVSyljsZg2WjtEdCRisVgYhjfeeCMNmk6nJ02alJubS2PRELfcckthYS7nkBJcsC+OrgpCMEBGgDI4dyzLZQgAmAr/8v3Xctxe3brmPPAgbpmA+x4Y7suGhkZryastx5IIkWY8DRZyEYPMQ5SAsiKpAhWCdVgYnBdSSukgjpSSjDYyoH3fb6cEL4Qq5JxrBIRhSDu9cOFCpdSUKVN69+7NGNu6deuWLVs8z6O6mng8XlFR4ft+XV3dsWPH6Fk6K9pHC8Nw8uTJr7/+em1t7WuvvbZy5cp169Zt2rRp3bp1paWlpMiEEJlMpqCgAG36rhPAoqdSqdQNN9xQXFzMGJs/f77rusXFxePHj6fJEFsffPDBdDrYs+fQtm27oeSXx4yVEYTJFbghbCmVEIJDUkB+71ty0UtL4nEx9MZL//Zrean0/qbmhp88WXfwEAIGK2ZIBSBSQUbIkAOWEP9JKkhra2s3b968YsWKFStWrF+/vr6+fuXKlfPnzydtQ8K7E3zusFeodRMdffq5evXq/fv39+nTZ+TIkXv37j169OjGjRurqqoqKiqKi4tjsVhpaSljrKamhiwAilQBoJAEUa9evXr16oU2Q4GGUEqR+0NS6q677tqxYwf5TZlMRnuL504UdIiiiGIfAB599NGvfe1rPXv2vO+++37/+997nkemcf/+/aMo+slPFxgGLyn9pyGDbzAtGzAAGUYAZDrd7BpMhcpXyI0jni8zmbQBWRArOJr0Zj164KPDAIeKkE6HpgEVQCDDkJFAFAICwoC8IP7WqURBhCiKhgwZQs4gHSdynPPy8rRCME1Th3LOnToMrCiKbNsmmUn2E4AjR44sXbr0nnvuufPOO5999tnGxsaamhrf93v27DlgwADP87p165ZMJrds2UKyh4KB5I9kMhnP8xzHee+99/bv3885D4KAQlNhGMbj8aamJgA5OTkHDhwoLi6Ooqi6upr8uM4VDGYyGar8EUJs374dwPz58xcuXDho0KDS0tJNmzYFQTB9+nQAzc0nXnzpN5d0KQL+2XFyS0rKXq/dLJgdqSjmWul0OggRd1FUgPvu7X1lj0LHNi3wE01NVkzdVt389NPNJ5rBADcG34MpwCIIjhCIJKAQBZ+XJgRFJRzHWbNmTV5e3okTJwDk5ORQLGPTpk1oM3k7gSp0rnzxVB9BSrlx48bp06cPGDCgtLR05cqVmzZtWr169dixY8ePH0+m0vbt2999911kRYlobWhzdH/729/OmTOHNJHruoQnQqFhGIMHDyZUMcZmzJixePFibYZ3iBzH8TwvnU5PmDAhiqIlS5bE4/GlS5c2NjYWFBRMmTJl48aNl1122Ze+9CUAL770rw2NLZmg5YMPPure7a/G3Ty+pnazUopBpdPN+blmsiXo0QsPPzKkS5ERtFh1W97/5U/effSxL+Z290aM6L1r57p1a5O2CS+FqwegpQkfHEIgocAkmG3mZTKeYiHwOUitMAxJUI0ZM4bsLYq8A7Asi/QJ6Q0tCzrUf2dsLIIwee9k+kgp165d+84773ieV11d7bpuFEWUwPnqV786depUMrzIbCeHVvvV2n+OoojUaxAEhKrc3FySXmEY7tmz54MPPqDE0bp168hLb2ho6Oj8KQZRUVEBQCm1efPmZDLZ1NT03HPPRVE0depUy7KmT59eVFTked73v/99AC3N2LFjF+eorKx0HVvCE0LGXKe5Objsr/Ctvx+bk2NGIf/Fk68v+Md3G1vwyKy177+vMkk5/Z7xN42AkLiqN2bPrr5t4jWF+VDgCkJBGJYLfG4ltVo6UJWA53mZTIZsEnKqyDdkjLmu24kAaYeBpYUEDUbZPQCpVGrJkiWO4wwePLh79+6GYSxfvlxKecUVVxQVFQkh1q5dS9EaQhIZSRSao6iSdj10mpkyEiTVPvnkk6FDh86ePfuuu+763ve+R4Pu3LmTYh/ZCXkKQFPPZE4Rg3QyxDTNsrIyACdOnNiwYQM98vOf/5xW9Nhjj916660A6uvr/987B5kEk/i3rW9IiWsG97dcgAVh5HnplGtjWGWR47ZYovipf9my5Q8IgRYgsPDd2Zs+OtQiwg8ffuDG8ePx+OMDuDoweHDvWC6LIO2EAR4kkx+Cp4CA/CESD1LKsyePiYFo86IoUqgPZ7syrHa1G9n9sLbiNqUUuYEUxEFbRQ1xg3OeTqc7UY913gquOefPPPNMMpkcOHBgSUlJGIZ79+7duHEj3Tp8+PCuXbsIMcQO0t+069mBdTootEL6Swks13UPHDiwYMGCZ599lkZ0HEdK2djYyDnv0qUL5QNs2/Z9n/xHMtcKCwspgpqfn68d7HHjxkVRVF9fr5RKJBK+7+/bt6++vl5Ked999/Xt21cp9fjjj1uWYQhwjoULf8c4FFT5sFLTbvXm/Ay+0Keb5UQff/zR668jACJwydDQgrSH/z1/Y+Q3I3p/yu0FObFPbNP/4YLFB/9dGYZoTnrcMsAAIcFaMxmkB4QQzc3NZ+Ez6SzKsSIrLmpZFjFEm79km6MNPbrGhIgYRc/SduhcmRYWpCt0YLljeOjoA2ehQ4cO/eEPfwAwatSooqKiKIp0qmT79u1UNarPJU6uh0Sb8KODQnzRjaWU5AAGQUDCKRaLkQRav349Y6y6uppMcpKCGpEAbr31VuL1ypUr6ZFEIlFSUiKEoNm2tLRQqP3HP/6xUooKYo8cObJ27VqlVBjCtu1/P/TBoUOfALK09LpIAgwM4AyWYfuZlB8dpcCngOErGA4cC83H8X9+sE1I2NwwYb266M3dOwEFy84DLJkBOBABCr7vk+Ahf1kIcRanxPM8QoAO8xIbKQuilQAl+CjCnJ3nCNvI8zyqjKAGOq/vOI6OS9ODnXsF5rwBiyb3s5/9DEB1dfWll14KYMOGDceOHYuiaM2aNbQAOgE0XVohZQNJBdDi6YSR55iXl0c2mRDiqaeeSiaTu3fv7tOnTyqVsiwrFoutXr06CIJEIvHkk08S+Hzfd12XsgJ33nnn7bffbtv2888/zxijkqPS0lKaw/Lly2nylFR5+eWXjx49SkbYU089BSAMIg6k05koilatXaOgRo/5Enjbe/MKb257J2YVXn5ZQeVIcBM+fNNGEMLz0bcfpv2vfkHITjTZvp8/+st/0+1yGCaSyWNQCowZBgcH462jJxIJcmgcx6Fo8GmJ9BSygjIkTggNsViMMXbixAnKu1PSlqSyll5CCMdxqJPGxkYCos5JE3CzgUUM6Sgezmcts5Ryy5YtBw8e7NGjR0VFxb59+w4cOFBbWzt27NiamhodDiH9rQV1S0sLubh33303ReoTiQTlVUgyP/DAA2+//faAAQOmTZvGGLvyyitnz549adIkKo95+umnJ0yYUFVVNW3atEGDBj322GN1dXWNjY3l5eV33333lClTpJTHjx//zne+wxgj+7SsrCwIgnQ6vXv3bgCWZekcwA9+8IMf/vCHYRg+8cQThmHIKBQciBBBbtiw4a6/m9C//8DCwvyWhiaZkUrhjbrmr4wxld1wzzeude0/bt6sDjei+yX46ldy/+a6LyQKWjzp7H1LXHlVD574aPY/lnxv3ta33oIMAyV5mJEAlAQAUtbabD0Lk4mHtHad/NBVLvRsXl7eK6+8QhzW6ddZs2a9+eabVAmiszQFBQXLly8nAZlMJqMooqRtfX39rFmzOqEBzz/pgoUFCxZEUbRt2zYqlrr//vuPHDnStWvX7MY6RZiTk0OGJ22tpkwmQ1eklCNGjADQr18/Cl1KKZ955hnqIZFIxGKxvLy8N954QylFcQ3VViWnlEqlUlEUUZ2F67o0yd27dyulXn31VS3kqb6bdFAYhr/61a9arwtDAK5pAXbPL/yPpEoHypt01x2C8Riz4kARwzU9sf61MYsXDX7hdze9trR6yYtVq5eNXPJCxcqlNy164YavjEQ+x8DeeGXJF3/3f0sXPjf5yh4wGQRQWJhPo5DlR/mlMAyrqqrOUg1cUVFBSxs+fDiyBBjJ4NmzZ3ueR9DJ5mcQBMRGtFXhPvroo57nkU4knGU3rq2tRVsteOdysudNYtFOZzKZ9evXz5w5c8iQIf369aurq9u6devChQtJSVFGE1mhkebmZsbYmjVryPCkBALFL2izGxoa6Czu37//6aefvvfee3fu3Dl37lyKyFP1FYBRo0ZNmzZt9uzZFOjSBQIrVqyYMWPGkSNHhBBUlME5P3r06IYNG37xi19QJ+l0WguJMAxfeOGFH/3oR2TEhBEEEn6ggMx7+/cuWbK4sLCwsKCLVDyCcOEylT70Hu6ZtOJ/zii7rvTShk8O5JpAsxG3uq1fu2fJq3s+PIy0wvtH8fOn6svK+jP19i1/W/7crzYdO85PHAtiziUZv4kW2NLSUltbm8lkmpqatAN7KgVBsHLlSm3jk0wi25Rz/uGHH9bV1ZHDSIsSQti2ffz4ceqT3EOl1JEjR+rr69FWSUB8k1LG4/FkMvmnP/0pu9SgE/HC80nkp+Tm5i5fvlwp9ctf/hJAcXFxjx49sqt8sgue2l3UkqzdCzn6e7u3UMikoMNKduiwYcNuu+226urqsrKySy65hMbVKdXs89fuoi6ELyoqoqccx2EwBBIMcTDR9s9myHI3Y8hxYMeBfKCQIw5c3g03Dce9dyRGXY+/vgwJDgsw4QoOLmBwWAYcCzGL3rPguXZXhgSdbb0EnFs1cLaUQtaLdCzrTaTsVwGyS0B159pF0FXdOoGr+X+mN/kuHLG2l9GEEDNnziTHqnv37tkNsl+0+nxm2WHirPVF+Kx3TduuC3D932cMQHAYAjaDzWAxGK3Ns15k5RAcgrW+X8guvmJ/7kSStqSk5MSJE5lMZvLkyXT91FrHi3SRzol0OJh+Llq0SCm1atWq3Nxcsmy0lOpEZf5FukitJsvEiROjKGpoaBg4cKCu0tRphM97jhfpz07nzSvUtTRUjrhly5Zly5YVFBRQ4ARtNim5wedr0Iv034Usy2pnoWvfRHsrF/Q/TFykv3Rqlz+nfwegMdTuHfbPYX4X6S+XSFbp6AjJKv1yLbKsq4tm1n95+v8TUVGsplxcGAAAAABJRU5ErkJggg==" alt="VE:UM & TILE" style="height:36px;width:auto;display:block;">
     </a>
     <nav>
       <ul class="bium-nav">
@@ -156,7 +218,7 @@ html,body{font-family:'Pretendard',-apple-system,sans-serif;background:#fffdf9;c
 
 <!-- 히어로 -->
 <section class="contact-hero">
-  <picture><source media="(max-width: 767px)" srcset="./images/contact-mo.png"><img src="./images/contact-hero.png" alt="사진 한 장으로 시작하는 간편한 상담"></picture>
+  <img src="./images/contact-hero.png" alt="사진 한 장으로 시작하는 간편한 상담">
 </section>
 
 <!-- 문의 방법 선택 -->
@@ -251,24 +313,102 @@ html,body{font-family:'Pretendard',-apple-system,sans-serif;background:#fffdf9;c
     </div>
   </div>
   <div class="bium-footer-links">
-    <a href="#">이용약관</a>
-    <a href="#">개인정보처리방침</a>
+    <a href="#" onclick="openModal('modalTerms'); return false;">이용약관</a>
+    <a href="#" onclick="openModal('modalPrivacy'); return false;">개인정보처리방침</a>
     <a href="/contact.html">견적 문의</a>
   </div>
 </footer>
+
+<!-- 이용약관 모달 -->
+<div class="modal-overlay" id="modalTerms" onclick="closeModal('modalTerms')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>이용약관</h3>
+      <button class="modal-close" onclick="closeModal('modalTerms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>제1조 (목적)</h4>
+      <p>본 약관은 비움앤타일 파트너스(이하 "회사")가 운영하는 웹사이트(veum.kr, 이하 "사이트")를 통해 제공하는 타일 시공 견적 상담 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.</p>
+      <h4>제2조 (서비스 내용)</h4>
+      <p>회사는 다음과 같은 서비스를 제공합니다.</p>
+      <ul>
+        <li>욕실, 주방 등 타일 시공 견적 상담</li>
+        <li>철거·타일·폐기물 처리 일괄 서비스 안내</li>
+        <li>카카오톡 및 구글폼을 통한 온라인 상담</li>
+      </ul>
+      <h4>제3조 (서비스 이용)</h4>
+      <p>서비스 이용은 무료이며, 견적 상담 신청 시 필요한 최소한의 정보를 제공하여야 합니다. 허위 정보 제공으로 인한 불이익은 이용자 본인이 부담합니다.</p>
+      <h4>제4조 (면책조항)</h4>
+      <p>회사는 이용자가 제공한 정보의 부정확으로 인해 발생한 손해에 대해 책임을 지지 않습니다. 또한 천재지변, 시스템 장애 등 불가항력적 사유로 인한 서비스 중단에 대해 책임을 지지 않습니다.</p>
+      <h4>제5조 (약관의 변경)</h4>
+      <p>회사는 필요 시 약관을 변경할 수 있으며, 변경된 약관은 사이트에 공지함으로써 효력이 발생합니다.</p>
+      <h4>제6조 (준거법)</h4>
+      <p>본 약관은 대한민국 법률에 따라 해석되며, 분쟁 발생 시 회사 소재지 관할 법원을 합의 관할로 합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 개인정보처리방침 모달 -->
+<div class="modal-overlay" id="modalPrivacy" onclick="closeModal('modalPrivacy')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>개인정보처리방침</h3>
+      <button class="modal-close" onclick="closeModal('modalPrivacy')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>비움앤타일 파트너스(이하 "회사")는 개인정보 보호법에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하게 처리할 수 있도록 다음과 같이 개인정보처리방침을 수립·공개합니다.</p>
+      <h4>1. 수집하는 개인정보 항목</h4>
+      <ul>
+        <li>필수: 이름, 연락처(전화번호)</li>
+        <li>선택: 시공 예정 지역, 시공 공간 종류 및 크기, 요청 사항</li>
+      </ul>
+      <h4>2. 개인정보 수집 목적</h4>
+      <ul>
+        <li>타일 시공 견적 상담 및 서비스 제공</li>
+        <li>상담 내용 확인 및 답변</li>
+        <li>서비스 품질 개선</li>
+      </ul>
+      <h4>3. 개인정보 보유 및 이용 기간</h4>
+      <p>수집된 개인정보는 상담 종료 후 <strong>3년</strong>간 보관 후 파기합니다. 단, 관계 법령에 의해 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관합니다.</p>
+      <h4>4. 개인정보의 제3자 제공</h4>
+      <p>회사는 이용자의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만, 이용자가 사전에 동의한 경우 또는 법령에 의한 경우는 예외로 합니다.</p>
+      <h4>5. 개인정보 파기 절차 및 방법</h4>
+      <p>보유 기간이 경과된 개인정보는 지체 없이 파기합니다. 전자적 파일 형태는 복구 불가능한 방법으로 삭제하며, 서면은 분쇄 또는 소각합니다.</p>
+      <h4>6. 개인정보 보호책임자</h4>
+      <ul>
+        <li>담당자: 비움앤타일 파트너스 대표</li>
+        <li>이메일: veumpartners@gmail.com</li>
+      </ul>
+      <h4>7. 이용자의 권리</h4>
+      <p>이용자는 언제든지 수집된 개인정보의 열람, 정정, 삭제를 요청할 수 있습니다. 요청은 위 이메일로 문의해 주시기 바랍니다.</p>
+      <p style="margin-top:20px; color:#888; font-size:13px;">시행일: 2025년 1월 1일</p>
+    </div>
+  </div>
+</div>
+
 
 <script>
 function toggleMenu(){document.getElementById('biumMobileMenu').classList.toggle('open');}
 var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-up').forEach(function(el){observer.observe(el);});
-</script>
 
-<script>
-document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("copy", e => e.preventDefault());
-document.addEventListener("keydown", e => {
-  if ((e.ctrlKey && ["c","a","u","s"].includes(e.key.toLowerCase())) || e.key === "F12") e.preventDefault();
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
 });
+
 </script>
 </body>
 </html>
