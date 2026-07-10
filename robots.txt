@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://tile.veum.kr/sitemap.xml
+Sitemap: https://veum.kr/sitemap.xml
