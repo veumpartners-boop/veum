@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시공사례 관리자 — 비움앤타일</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Pretendard', sans-serif; background: #F5F5F5; color: #1A1A1A; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #888; margin-bottom: 32px; }
+
+.login-box { max-width: 360px; margin: 100px auto; background: #fff; border-radius: 10px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.login-box h2 { font-size: 18px; margin-bottom: 20px; }
+.login-box input { width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 14px; margin-bottom: 12px; font-family: inherit; }
+.login-box button { width: 100%; padding: 12px; background: #111; color: #fff; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.login-error { color: #c0392b; font-size: 12px; margin-bottom: 10px; }
+
+.panel { background: #fff; border-radius: 10px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 6px; }
+.field input[type=text], .field select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; }
+.row2 { display: flex; gap: 12px; }
+.row2 > div { flex: 1; }
+
+.dropzone { border: 2px dashed #ccc; border-radius: 8px; padding: 24px; text-align: center; color: #888; font-size: 13px; cursor: pointer; background: #fafafa; }
+.dropzone.drag { border-color: #B8963C; background: #fdf8ee; }
+.dropzone input { display: none; }
+.thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.thumb { position: relative; width: 90px; height: 90px; border-radius: 6px; overflow: hidden; border: 2px solid #eee; }
+.thumb.cover { border-color: #B8963C; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb .badge { position: absolute; top: 3px; left: 3px; background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; padding: 2px 5px; border-radius: 3px; }
+.thumb .rm { position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.6); color: #fff; border: none; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; cursor: pointer; line-height: 1; }
+.thumb-hint { font-size: 11px; color: #999; margin-top: 6px; }
+
+.checkrow { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.checkrow label { font-size: 13px; color: #444; }
+
+.btn-primary { background: #B8963C; color: #fff; border: none; padding: 12px 28px; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; }
+.btn-primary:hover { background: #a07830; }
+.btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+.btn-secondary { background: #fff; border: 1.5px solid #ddd; color: #555; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; }
+
+.status-msg { font-size: 13px; margin-top: 12px; }
+.status-msg.ok { color: #1e7d3c; }
+.status-msg.err { color: #c0392b; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #eee; }
+th { color: #888; font-weight: 700; font-size: 11px; text-transform: uppercase; }
+.pub-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.pub-tag.on { background: #E6F4EA; color: #1e7d3c; }
+.pub-tag.off { background: #F0F0F0; color: #888; }
+.row-actions button { font-size: 12px; margin-right: 8px; background: none; border: none; color: #888; cursor: pointer; text-decoration: underline; }
+.row-actions button:hover { color: #111; }
+</style>
+</head>
+<body>
+
+<div id="loginView" class="login-box">
+  <h2>관리자 로그인</h2>
+  <div class="login-error" id="loginError"></div>
+  <input type="text" id="loginEmail" placeholder="이메일">
+  <input type="password" id="loginPw" placeholder="비밀번호">
+  <button onclick="doLogin()">로그인</button>
+</div>
+
+<div id="adminView" class="wrap" style="display:none;">
+  <h1>시공사례 관리자</h1>
+  <div class="sub">저널 생성기로 만든 이미지를 순서대로 올리면 갤러리에 반영됩니다. <span id="whoami" style="color:#B8963C;"></span> · <a href="#" onclick="doLogout();return false;" style="color:#888;">로그아웃</a></div>
+
+  <div class="panel">
+    <div class="field"><label>제목 (현장명)</label><input type="text" id="f_title" placeholder="예: 송파 상가 인테리어"></div>
+    <div class="field"><label>위치</label><input type="text" id="f_location" placeholder="예: 경기 성남시"></div>
+    <div class="field"><label>태그 (쉼표로 구분)</label><input type="text" id="f_tags" placeholder="예: 발코니, 욕실, 폴리싱타일, 줄눈시공"></div>
+
+    <div class="field">
+      <label>이미지 (여러 장 선택 시 선택 순서대로 저장 — 첫 번째가 대표 이미지)</label>
+      <div class="dropzone" id="dropzone">
+        클릭하거나 파일을 여기로 끌어다 놓으세요
+        <input type="file" id="fileInput" accept="image/*" multiple>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+      <div class="thumb-hint">순서를 바꾸려면 이미지를 지우고 원하는 순서로 다시 선택해주세요.</div>
+    </div>
+
+    <div class="checkrow">
+      <input type="checkbox" id="f_published">
+      <label for="f_published">바로 공개 (체크 안 하면 비공개로 저장, 나중에 목록에서 공개 전환 가능)</label>
+    </div>
+
+    <button class="btn-primary" id="submitBtn" onclick="submitProject()">시공사례 등록</button>
+    <div class="status-msg" id="statusMsg"></div>
+  </div>
+
+  <div class="panel">
+    <h2 style="font-size:16px;margin-bottom:16px;">등록된 시공사례</h2>
+    <table>
+      <thead><tr><th>대표이미지</th><th>제목</th><th>위치</th><th>공개여부</th><th></th></tr></thead>
+      <tbody id="projectListBody"><tr><td colspan="5">불러오는 중...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://zpsloypsfcnidqxjkvlo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GmeZMdD9GgRKMFuPzQJUSA_0B4sxJMp';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let selectedFiles = []; // {file, previewUrl}
+
+async function checkSession() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    document.getElementById('loginView').style.display = 'none';
+    document.getElementById('adminView').style.display = 'block';
+    document.getElementById('whoami').textContent = session.user.email;
+    loadProjectList();
+  } else {
+    document.getElementById('loginView').style.display = 'block';
+    document.getElementById('adminView').style.display = 'none';
+  }
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPw').value;
+  const { error } = await sb.auth.signInWithPassword({ email, password: pw });
+  if (error) {
+    document.getElementById('loginError').textContent = '로그인 실패: ' + error.message;
+    return;
+  }
+  checkSession();
+}
+async function doLogout() {
+  await sb.auth.signOut();
+  checkSession();
+}
+
+/* ---------- 파일 선택 ---------- */
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault(); dropzone.classList.remove('drag');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', () => { addFiles(Array.from(fileInput.files)); fileInput.value = ''; });
+
+function addFiles(files) {
+  files.filter(f => f.type.startsWith('image/')).forEach(file => {
+    selectedFiles.push({ file, previewUrl: URL.createObjectURL(file) });
+  });
+  renderThumbs();
+}
+function removeFile(idx) {
+  selectedFiles.splice(idx, 1);
+  renderThumbs();
+}
+function renderThumbs() {
+  const box = document.getElementById('thumbs');
+  box.innerHTML = selectedFiles.map((f, i) => `
+    <div class="thumb ${i===0?'cover':''}">
+      <img src="${f.previewUrl}">
+      ${i===0 ? '<div class="badge">대표</div>' : ''}
+      <button class="rm" onclick="removeFile(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+/* ---------- 등록 ---------- */
+async function submitProject() {
+  const title = document.getElementById('f_title').value.trim();
+  const location = document.getElementById('f_location').value.trim();
+  const tags = document.getElementById('f_tags').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const published = document.getElementById('f_published').checked;
+  const statusEl = document.getElementById('statusMsg');
+  const btn = document.getElementById('submitBtn');
+
+  if (!title) { statusEl.textContent = '제목을 입력해주세요.'; statusEl.className = 'status-msg err'; return; }
+  if (selectedFiles.length === 0) { statusEl.textContent = '이미지를 1장 이상 선택해주세요.'; statusEl.className = 'status-msg err'; return; }
+
+  btn.disabled = true;
+  statusEl.className = 'status-msg';
+  statusEl.textContent = '업로드 중... (' + selectedFiles.length + '장)';
+
+  try {
+    const { data: project, error: insertErr } = await sb
+      .from('portfolio_projects')
+      .insert({ title, location, tags, cover_image_url: '', is_published: published })
+      .select().single();
+    if (insertErr) throw insertErr;
+
+    const uploadedUrls = [];
+    for (let i = 0; i < selectedFiles.length; i++) {
+      statusEl.textContent = `업로드 중... (${i+1}/${selectedFiles.length})`;
+      const file = selectedFiles[i].file;
+      const ext = file.name.split('.').pop();
+      const path = `${project.id}/${String(i).padStart(2,'0')}.${ext}`;
+      const { error: upErr } = await sb.storage.from('portfolio-images').upload(path, file, { upsert: true });
+      if (upErr) throw upErr;
+      const { data: pub } = sb.storage.from('portfolio-images').getPublicUrl(path);
+      uploadedUrls.push(pub.publicUrl);
+      await sb.from('portfolio_images').insert({ project_id: project.id, image_url: pub.publicUrl, sort_order: i });
+    }
+
+    await sb.from('portfolio_projects').update({ cover_image_url: uploadedUrls[0] }).eq('id', project.id);
+
+    statusEl.textContent = '등록 완료!';
+    statusEl.className = 'status-msg ok';
+    document.getElementById('f_title').value = '';
+    document.getElementById('f_location').value = '';
+    document.getElementById('f_tags').value = '';
+    document.getElementById('f_published').checked = false;
+    selectedFiles = [];
+    renderThumbs();
+    loadProjectList();
+  } catch (e) {
+    statusEl.textContent = '오류: ' + e.message;
+    statusEl.className = 'status-msg err';
+    console.error(e);
+  }
+  btn.disabled = false;
+}
+
+/* ---------- 목록 ---------- */
+async function loadProjectList() {
+  const body = document.getElementById('projectListBody');
+  const { data, error } = await sb.from('portfolio_projects').select('*').order('created_at', { ascending: false });
+  if (error) { body.innerHTML = '<tr><td colspan="5">불러오기 실패</td></tr>'; return; }
+  if (!data.length) { body.innerHTML = '<tr><td colspan="5">등록된 항목이 없습니다.</td></tr>'; return; }
+  body.innerHTML = data.map(p => `
+    <tr>
+      <td><img src="${p.cover_image_url}" style="width:48px;height:48px;object-fit:cover;border-radius:4px;"></td>
+      <td>${p.title}</td>
+      <td>${p.location || ''}</td>
+      <td><span class="pub-tag ${p.is_published?'on':'off'}">${p.is_published?'공개':'비공개'}</span></td>
+      <td class="row-actions">
+        <button onclick="togglePublish('${p.id}', ${!p.is_published})">${p.is_published?'비공개로':'공개로'}</button>
+        <button onclick="deleteProject('${p.id}')">삭제</button>
+      </td>
+    </tr>
+  `).join('');
+}
+async function togglePublish(id, newState) {
+  await sb.from('portfolio_projects').update({ is_published: newState }).eq('id', id);
+  loadProjectList();
+}
+async function deleteProject(id) {
+  if (!confirm('이 시공사례를 삭제할까요? 되돌릴 수 없습니다.')) return;
+  await sb.from('portfolio_projects').delete().eq('id', id);
+  loadProjectList();
+}
+
+checkSession();
+</script>
+</body>
+</html>
