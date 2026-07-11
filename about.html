@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회사 소개 — 비움앤타일 파트너스</title>
+<meta property="og:title" content="회사 소개 — 비움앤타일 파트너스">
+<meta property="og:description" content="호주에서 쌓은 10년의 시공 경험, 한국에서 이어가는 비움앤타일 파트너스">
+<meta property="og:image" content="https://veum.kr/images/og-cover.jpg">
+<meta property="og:url" content="https://veum.kr/about.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Pretendard', -apple-system, sans-serif; color: #1A1A1A; background: #fffdf9; }
+
+/* ===== 헤더 (사이트 공통) ===== */
+.bium-header { background: #111111; width: 100%; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+.bium-header-inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.bium-logo { font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+.bium-nav { display: flex; align-items: center; gap: 36px; list-style: none; margin: 0; padding: 0; }
+.bium-nav a { color: #ccc; text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; transition: color 0.2s; white-space: nowrap; }
+.bium-nav a:hover { color: #fff; }
+.bium-nav .nav-cta a { background: #B8963C; color: #fff; padding: 8px 20px; border-radius: 4px; font-weight: 600; }
+.bium-nav .nav-cta a:hover { background: #a07830; }
+.bium-nav .nav-box a { background: transparent; color: #aaa; padding: 8px 16px; border-radius: 4px; font-weight: 500; border: 1.5px solid #444; font-size: 13px; }
+.bium-nav .nav-box a:hover { border-color: #888; color: #fff; }
+.bium-hamburger { display: none; flex-direction: column; justify-content: center; gap: 6px; cursor: pointer; padding: 8px; width: 40px; height: 40px; }
+.bium-hamburger span { width: 26px !important; height: 2.5px !important; background: #fff !important; border-radius: 2px !important; display: block !important; flex-shrink: 0 !important; transition: all 0.3s; }
+.bium-mobile-menu { display: none; background: #111; border-top: 1px solid #222; }
+.bium-mobile-menu.open { display: block; }
+.bium-mobile-menu a { display: block; padding: 16px 40px; color: #ccc; text-decoration: none; font-size: 15px; border-bottom: 1px solid #1a1a1a; }
+.bium-mobile-menu a:hover { color: #fff; background: #1a1a1a; }
+@media (max-width: 768px) {
+  .bium-nav { display: none; }
+  .bium-hamburger { display: flex; }
+  .bium-header-inner { padding: 0 20px; }
+}
+
+/* ===== 히어로 ===== */
+.about-hero {
+  position: relative;
+  height: 56vh;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: #1A1A1A;
+}
+.about-hero img {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.55;
+}
+.about-hero-content { position: relative; z-index: 2; color: #fff; padding: 0 20px; }
+.about-hero-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #E8CB7E; text-transform: uppercase; margin-bottom: 16px; }
+.about-hero h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 16px; line-height: 1.3; }
+.about-hero p { font-size: 16px; color: #ddd; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+@media (max-width: 768px) {
+  .about-hero h1 { font-size: 28px; }
+  .about-hero p { font-size: 14px; }
+}
+
+/* ===== 공통 섹션 ===== */
+.about-section { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+.about-section-title {
+  font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #B8963C;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.about-section-heading { font-size: 28px; font-weight: 800; color: #1A1A1A; margin-bottom: 32px; letter-spacing: -0.5px; }
+@media (max-width: 768px) {
+  .about-section { padding: 56px 20px; }
+  .about-section-heading { font-size: 22px; }
+}
+
+/* ===== About Me ===== */
+.about-me-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.about-me-text p { font-size: 15px; line-height: 1.9; color: #444; margin-bottom: 20px; }
+.about-me-images { display: grid; gap: 16px; }
+.about-me-images img { width: 100%; display: block; object-fit: cover; }
+.about-me-images img:first-child { aspect-ratio: 4/3; }
+@media (max-width: 900px) {
+  .about-me-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-me-images { order: -1; }
+}
+
+/* ===== 경력 타임라인 (호주 vs 한국) ===== */
+.career-split { background: #F4EFE5; }
+.career-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #E5DCC9; }
+.career-col { padding: 40px; }
+.career-col.au { background: #1A1A1A; color: #fff; }
+.career-col.kr { background: #fff; color: #1A1A1A; }
+.career-col-flag { font-size: 28px; margin-bottom: 12px; }
+.career-col-years { font-size: 22px; font-weight: 800; margin-bottom: 24px; letter-spacing: -0.3px; }
+.career-col ul { list-style: none; }
+.career-col li { font-size: 14px; line-height: 1.8; margin-bottom: 18px; padding-left: 20px; position: relative; }
+.career-col li::before { content: '—'; position: absolute; left: 0; opacity: 0.5; }
+.career-col.au li { color: #ddd; }
+.career-col.kr li { color: #555; }
+.career-col li strong { display: block; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.career-col.au li strong { color: #fff; }
+.career-col.kr li strong { color: #1A1A1A; }
+.career-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; }
+.career-photo { position: relative; aspect-ratio: 4/3; overflow: hidden; }
+.career-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.career-photo span {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  color: #fff; font-size: 12px; font-weight: 600;
+}
+@media (max-width: 900px) {
+  .career-columns { grid-template-columns: 1fr; }
+  .career-photos { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== 쇼케이스 ===== */
+.showcase-block { margin-bottom: 64px; }
+.showcase-block:last-child { margin-bottom: 0; }
+.showcase-block-title { font-size: 18px; font-weight: 700; color: #1A1A1A; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.showcase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.showcase-item { position: relative; aspect-ratio: 1/1; overflow: hidden; background: #f2f2ef; }
+.showcase-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.showcase-item span {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  color: #fff; font-size: 12.5px; font-weight: 600;
+}
+@media (max-width: 900px) {
+  .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .showcase-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== CTA ===== */
+.about-cta { background: #1A1A1A; text-align: center; padding: 72px 20px; }
+.about-cta h2 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 14px; }
+.about-cta p { color: #bbb; font-size: 14px; margin-bottom: 28px; }
+.about-cta a {
+  display: inline-block; background: #B8963C; color: #fff; text-decoration: none;
+  padding: 14px 36px; border-radius: 4px; font-weight: 700; font-size: 15px;
+}
+.about-cta a:hover { background: #a07830; }
+
+/* ===== 푸터 (사이트 공통) ===== */
+.bium-footer { background: #F5F5F5; border-top: 1px solid #E0E0E0; padding: 60px 40px 40px; }
+.bium-footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 48px; }
+.bium-footer-logo { font-size: 15px; font-weight: 800; letter-spacing: 1.5px; color: #1A1A1A; text-transform: uppercase; margin-bottom: 16px; }
+.bium-footer-info { font-size: 13px; color: #666; line-height: 2; }
+.bium-footer-info strong { color: #333; }
+.bium-footer-copy { font-size: 12px; color: #999; margin-top: 20px; }
+.bium-footer-col-title { font-size: 14px; font-weight: 700; color: #1A1A1A; margin-bottom: 16px; letter-spacing: 0.3px; }
+.bium-footer-phone { font-size: 28px; font-weight: 800; color: #1A1A1A; letter-spacing: -0.5px; margin-bottom: 8px; }
+.bium-footer-hours { font-size: 13px; color: #777; line-height: 1.9; margin-bottom: 20px; }
+.bium-footer-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.bium-footer-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: 1.5px solid #ccc; border-radius: 4px; font-size: 13px; font-weight: 600; color: #333; text-decoration: none; background: #fff; transition: all 0.2s; cursor: pointer; }
+.bium-footer-btn:hover { border-color: #333; color: #111; }
+.bium-footer-btn.kakao { background: #F9E000; border-color: #F9E000; color: #111; }
+.bium-footer-btn.kakao:hover { background: #F0D800; }
+.bium-footer-links { border-top: 1px solid #E0E0E0; margin-top: 40px; padding-top: 24px; display: flex; gap: 24px; flex-wrap: wrap; }
+.bium-footer-links a { font-size: 12px; color: #888; text-decoration: none; }
+.bium-footer-links a:hover { color: #333; }
+.bium-footer a { color: inherit; text-decoration: none; }
+@media (max-width: 900px) {
+  .bium-footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .bium-footer { padding: 40px 20px 32px; }
+}
+
+/* ===== 모달 ===== */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center; }
+.modal-overlay.open { display: flex; }
+.modal-box { background: #fff; border-radius: 12px; width: 90%; max-width: 640px; max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; }
+.modal-header { padding: 20px 24px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.modal-header h3 { font-size: 18px; font-weight: 700; color: #1A1A1A; margin: 0; }
+.modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: #888; line-height: 1; }
+.modal-close:hover { color: #1A1A1A; }
+.modal-body { padding: 24px; overflow-y: auto; font-size: 14px; color: #444; line-height: 1.8; }
+.modal-body h4 { font-size: 15px; font-weight: 700; color: #1A1A1A; margin: 20px 0 8px; }
+.modal-body h4:first-child { margin-top: 0; }
+.modal-body p { margin: 0 0 8px; }
+.modal-body ul { margin: 0 0 8px; padding-left: 20px; }
+.modal-body ul li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/index.html" class="bium-logo"><img src="/images/title.png" alt="VE:UM & TILE" style="height:36px; width:auto; display:block;"></a>
+    <nav>
+      <ul class="bium-nav">
+        <li><a href="/about.html">회사 소개</a></li>
+        <li><a href="/package.html">시공 패키지</a></li>
+        <li><a href="/bathroom.html">욕실 패키지</a></li>
+        <li><a href="/gallery/">시공 사례</a></li>
+        <li class="nav-cta"><a href="/contact.html">견적 문의</a></li>
+        <li class="nav-box"><a href="https://box.veum.kr" target="_blank">비움박스 ↗</a></li>
+      </ul>
+    </nav>
+    <div class="bium-hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="bium-mobile-menu" id="biumMobileMenu">
+    <a href="/about.html">회사 소개</a>
+    <a href="/package.html">시공 패키지</a>
+    <a href="/bathroom.html">욕실 패키지</a>
+    <a href="/gallery/">시공 사례</a>
+    <a href="/contact.html">견적 문의</a>
+    <a href="https://box.veum.kr" target="_blank" style="color:#aaa;">비움박스 ↗</a>
+  </div>
+</header>
+
+<!-- 히어로 -->
+<section class="about-hero">
+  <img src="/images/about/about-kitchen.jpg" alt="">
+  <div class="about-hero-content">
+    <div class="about-hero-eyebrow">About Ve:um &amp; Tile Partners</div>
+    <h1>호주에서 쌓은 10년,<br>한국에서 이어갑니다</h1>
+    <p>대형 건설사 프로젝트부터 하이엔드 주택까지 — 현장에서 직접 쌓아온 경험을 바탕으로,<br class="pc-only">한국 고객의 니즈에 맞춘 프리미엄 시공을 제공합니다</p>
+  </div>
+</section>
+
+<!-- About Me -->
+<section class="about-section">
+  <div class="about-section-title">About Me</div>
+  <div class="about-me-grid">
+    <div class="about-me-text">
+      <p>저는 호주에서 쌓은 10년의 시공 경험을 토대로 한국에서 실내 인테리어 등 다양한 분야에서 시공팀을 운영하고 있습니다. 하지만 단순히 '호주식 방식'을 그대로 적용하는 것이 아니라, 현장의 조건과 한국 고객의 니즈에 맞춰 유연하게 시공 방식을 조율합니다.</p>
+      <p>비움앤타일은 철거 → 폐기물 처리 → 타일 시공 → 도기세팅까지 이어지는 One-Stop 프리미엄 솔루션을 제공합니다. 동시에, 고객의 상황에 맞추어 폐기물 처리만, 타일 시공만 등 단일 서비스로도 선택할 수 있어, 다양한 현장에 적합한 맞춤형 서비스를 운영하고 있습니다.</p>
+      <p>저희는 고객과의 충분한 상담·협의를 통해, 단순한 시공을 넘어 함께 공간을 완성해 나갑니다.</p>
+    </div>
+    <div class="about-me-images">
+      <img src="/images/about/about-terrazzo.jpg" alt="테라조 타일 시공">
+    </div>
+  </div>
+</section>
+
+<!-- 경력 하이라이트 -->
+<section class="career-split">
+  <div class="about-section" style="padding-top:80px; padding-bottom:80px;">
+    <div class="about-section-title">Career Highlights</div>
+    <div class="about-section-heading" style="color:#1A1A1A;">호주에서 검증된 경력, 한국에서 이어지는 시공</div>
+
+    <div class="career-columns">
+      <div class="career-col au">
+        <div class="career-col-flag">🇦🇺</div>
+        <div class="career-col-years">10+ YEARS</div>
+        <ul>
+          <li>대형 건설사 프로젝트 참여 (아파트, 호텔, 상가, 고급 주택)</li>
+          <li>전체 타일 시공 총괄 책임자로서 현장관리, 조율, 타일공정 및 품질 책임</li>
+          <li>
+            <strong>다양한 프로젝트 직접 시공</strong>
+            Commercial(호텔·리테일·쇼핑몰), Residential(하이엔드 하우스·아파트·펜트하우스)<br>
+            세부전문: 대형 타일, 샌드스톤, 외벽 타일 시공
+          </li>
+        </ul>
+      </div>
+      <div class="career-col kr">
+        <div class="career-col-flag">🇰🇷</div>
+        <div class="career-col-years" id="krYears">5+ YEARS, 현재</div>
+        <ul>
+          <li><strong>소통이 우선되는 시공</strong>고객과의 상담·협의 과정을 통해 시공 전후 의견을 반영, 프로젝트를 함께 완성합니다</li>
+          <li><strong>프리미엄 시공</strong>호주의 표준 공법과 고급 시공 디테일을 한국 현장에 맞춰 차별화된 품질과 완성도를 보장</li>
+          <li><strong>비움앤타일 통합 서비스</strong>철거 → 폐기물 처리 → 타일 시공 → 세팅까지 One-Stop Solution 제공하여 고객의 부담을 줄이고, 전체 공정을 보다 매끄럽게 운영</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="career-photos">
+      <div class="career-photo"><img src="/images/about/au-penthouse.jpg" alt="펜트하우스"><span>펜트 하우스</span></div>
+      <div class="career-photo"><img src="/images/about/au-hotel.jpg" alt="호텔"><span>호텔</span></div>
+      <div class="career-photo"><img src="/images/about/au-apartment.jpg" alt="아파트"><span>아파트</span></div>
+      <div class="career-photo"><img src="/images/about/au-external.jpg" alt="외벽"><span>외벽</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 쇼케이스 -->
+<section class="about-section">
+  <div class="about-section-title">Showcase</div>
+  <div class="about-section-heading">호주에서의 시공 현장</div>
+
+  <div class="showcase-block">
+    <div class="showcase-block-title">Apartment Project</div>
+    <div class="showcase-grid">
+      <div class="showcase-item"><img src="/images/about/sc-herringbone.jpg" alt=""><span>Herringbone Pattern</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-extfloor.jpg" alt=""><span>External Floor</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-tilepedestal.jpg" alt=""><span>Tile Pedestal</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-sandstone.jpg" alt=""><span>Sandstone External Wall</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-balcony.jpg" alt=""><span>Balcony</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-lobby.jpg" alt=""><span>Lobby</span></div>
+    </div>
+  </div>
+
+  <div class="showcase-block">
+    <div class="showcase-block-title">Hotel &amp; Residential Project</div>
+    <div class="showcase-grid">
+      <div class="showcase-item"><img src="/images/about/sc-marble.jpg" alt=""><span>Marble</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-pool.jpg" alt=""><span>Pool</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-reslobby.jpg" alt=""><span>Residential Project, Sydney</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-tilepedestal2.jpg" alt=""><span>Tile Pedestal</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-lobbyreception.jpg" alt=""><span>Lobby &amp; Reception Desk</span></div>
+    </div>
+  </div>
+
+  <div class="showcase-block">
+    <div class="showcase-block-title">Retail Shop &amp; House Project</div>
+    <div class="showcase-grid">
+      <div class="showcase-item"><img src="/images/about/sc-woodtile.jpg" alt=""><span>Wood Tile — Timber Pattern</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-niche.jpg" alt=""><span>Tile Niche in Shower</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-bathtub.jpg" alt=""><span>Bathtub &amp; Niche</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-houseproject.jpg" alt=""><span>House Project</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-extstone1.jpg" alt=""><span>External Stone</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-brick.jpg" alt=""><span>Brick Pattern</span></div>
+      <div class="showcase-item"><img src="/images/about/sc-frenchpattern.jpg" alt=""><span>Marble French Pattern</span></div>
+    </div>
+  </div>
+
+  <div class="showcase-block">
+    <div class="showcase-block-title">Other Services</div>
+    <div class="showcase-grid">
+      <div class="showcase-item"><img src="/images/about/os-demolition.jpg" alt=""><span>철거 / 방수</span></div>
+      <div class="showcase-item"><img src="/images/about/os-wastebin.jpg" alt=""><span>중간폐기물 처리 (비움박스대여)</span></div>
+      <div class="showcase-item"><img src="/images/about/os-toilet.jpg" alt=""><span>도기세팅</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <h2>비움앤타일과 함께 공간을 완성해보세요</h2>
+  <p>철거부터 타일 시공, 도기세팅까지 — 하나의 팀이 책임집니다</p>
+  <a href="/contact.html">견적 문의하기</a>
+</section>
+
+<!-- 푸터 -->
+<footer class="bium-footer">
+  <div class="bium-footer-inner">
+    <div>
+      <div class="bium-footer-logo">VE:UM &amp; TILE PARTNERS</div>
+      <div class="bium-footer-info">
+        <strong>비움앤타일 파트너스</strong><br>
+        대표. 김영민<br>
+        사업자등록번호. 362-65-00396<br>
+        경기도 성남시 수정구 청계산로 1길 19 2층<br>
+        Tel. 010-6548-8753<br>
+        서울·경기 전 지역 서비스
+      </div>
+      <div class="bium-footer-copy">
+        COPYRIGHT© 비움앤타일 파트너스. ALL RIGHTS RESERVED.
+      </div>
+    </div>
+    <div>
+      <div class="bium-footer-col-title">고객센터</div>
+      <div class="bium-footer-phone">010-6548-8753</div>
+      <div class="bium-footer-hours">
+        평일 오전 9시 - 오후 6시<br>
+        토요일 오전 9시 - 오후 3시<br>
+        일요일 및 공휴일 휴무
+      </div>
+      <div class="bium-footer-btns">
+        <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="bium-footer-btn kakao">💬 카카오톡 문의</a>
+        <a href="https://forms.gle/9FBjxBR5zf9Xhvtw6" target="_blank" class="bium-footer-btn">📋 견적 문의</a>
+        <a href="https://box.veum.kr" target="_blank" class="bium-footer-btn">📦 비움박스</a>
+      </div>
+    </div>
+    <div>
+      <div class="bium-footer-col-title">서비스 안내</div>
+      <div class="bium-footer-hours">
+        <strong style="color:#333">서비스 지역</strong><br>
+        서울 · 경기 전 지역<br><br>
+        <strong style="color:#333">제공 서비스</strong><br>
+        철거 · 설비 · 타일 · 도기세팅 · 폐기물처리<br>
+        5IN1 원스톱 리모델링
+      </div>
+    </div>
+  </div>
+  <div class="bium-footer-links">
+    <a href="#" onclick="openModal('modalTerms'); return false;">이용약관</a>
+    <a href="#" onclick="openModal('modalPrivacy'); return false;">개인정보처리방침</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</footer>
+
+<!-- 이용약관 모달 -->
+<div class="modal-overlay" id="modalTerms" onclick="closeModal('modalTerms')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>이용약관</h3>
+      <button class="modal-close" onclick="closeModal('modalTerms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>제1조 (목적)</h4>
+      <p>본 약관은 비움앤타일 파트너스(이하 "회사")가 운영하는 웹사이트(veum.kr, 이하 "사이트")를 통해 제공하는 타일 시공 견적 상담 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.</p>
+      <h4>제2조 (서비스 내용)</h4>
+      <p>회사는 다음과 같은 서비스를 제공합니다.</p>
+      <ul>
+        <li>욕실, 주방 등 타일 시공 견적 상담</li>
+        <li>철거·타일·폐기물 처리 일괄 서비스 안내</li>
+        <li>카카오톡 및 구글폼을 통한 온라인 상담</li>
+      </ul>
+      <h4>제3조 (서비스 이용)</h4>
+      <p>서비스 이용은 무료이며, 견적 상담 신청 시 필요한 최소한의 정보를 제공하여야 합니다. 허위 정보 제공으로 인한 불이익은 이용자 본인이 부담합니다.</p>
+      <h4>제4조 (면책조항)</h4>
+      <p>회사는 이용자가 제공한 정보의 부정확으로 인해 발생한 손해에 대해 책임을 지지 않습니다. 또한 천재지변, 시스템 장애 등 불가항력적 사유로 인한 서비스 중단에 대해 책임을 지지 않습니다.</p>
+      <h4>제5조 (약관의 변경)</h4>
+      <p>회사는 필요 시 약관을 변경할 수 있으며, 변경된 약관은 사이트에 공지함으로써 효력이 발생합니다.</p>
+      <h4>제6조 (준거법)</h4>
+      <p>본 약관은 대한민국 법률에 따라 해석되며, 분쟁 발생 시 회사 소재지 관할 법원을 합의 관할로 합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 개인정보처리방침 모달 -->
+<div class="modal-overlay" id="modalPrivacy" onclick="closeModal('modalPrivacy')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>개인정보처리방침</h3>
+      <button class="modal-close" onclick="closeModal('modalPrivacy')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>비움앤타일 파트너스(이하 "회사")는 개인정보 보호법에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하게 처리할 수 있도록 다음과 같이 개인정보처리방침을 수립·공개합니다.</p>
+      <h4>1. 수집하는 개인정보 항목</h4>
+      <ul>
+        <li>필수: 이름, 연락처(전화번호)</li>
+        <li>선택: 시공 예정 지역, 시공 공간 종류 및 크기, 요청 사항</li>
+      </ul>
+      <h4>2. 개인정보 수집 목적</h4>
+      <ul>
+        <li>타일 시공 견적 상담 및 서비스 제공</li>
+        <li>상담 내용 확인 및 답변</li>
+        <li>서비스 품질 개선</li>
+      </ul>
+      <h4>3. 개인정보 보유 및 이용 기간</h4>
+      <p>수집된 개인정보는 상담 종료 후 <strong>3년</strong>간 보관 후 파기합니다. 단, 관계 법령에 의해 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관합니다.</p>
+      <h4>4. 개인정보의 제3자 제공</h4>
+      <p>회사는 이용자의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만, 이용자가 사전에 동의한 경우 또는 법령에 의한 경우는 예외로 합니다.</p>
+      <h4>5. 개인정보 파기 절차 및 방법</h4>
+      <p>보유 기간이 경과된 개인정보는 지체 없이 파기합니다. 전자적 파일 형태는 복구 불가능한 방법으로 삭제하며, 서면은 분쇄 또는 소각합니다.</p>
+      <h4>6. 개인정보 보호책임자</h4>
+      <ul>
+        <li>담당자: 비움앤타일 파트너스 대표</li>
+        <li>이메일: veumpartners@gmail.com</li>
+      </ul>
+      <h4>7. 이용자의 권리</h4>
+      <p>이용자는 언제든지 수집된 개인정보의 열람, 정정, 삭제를 요청할 수 있습니다. 요청은 위 이메일로 문의해 주시기 바랍니다.</p>
+      <p style="margin-top:20px; color:#888; font-size:13px;">시행일: 2025년 1월 1일</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('biumMobileMenu').classList.toggle('open');
+}
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(function(m) { m.classList.remove('open'); });
+    document.body.style.overflow = '';
+  }
+});
+
+// 한국 시공 연차 자동 계산 (매년 안 바꿔도 됨)
+var KR_START_YEAR = 2021; // 한국에서 시공팀 운영 시작한 연도
+var krYearsEl = document.getElementById('krYears');
+if (krYearsEl) {
+  var years = new Date().getFullYear() - KR_START_YEAR;
+  krYearsEl.textContent = years + '+ YEARS, 현재';
+}
+</script>
+
+</body>
+</html>
