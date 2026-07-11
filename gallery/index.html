@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="./favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시공 사례 — 비움앤타일 파트너스</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Pretendard', -apple-system, sans-serif; color: #1A1A1A; }
+
+/* ===== 헤더 ===== */
+.bium-header {
+  background: #111111;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #222;
+}
+.bium-header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bium-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bium-logo span {
+  color: #B8963C;
+}
+.bium-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bium-nav a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.bium-nav a:hover {
+  color: #fff;
+}
+.bium-nav .nav-cta a {
+  background: #B8963C;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.bium-nav .nav-cta a:hover {
+  background: #a07830;
+  color: #fff;
+}
+
+/* 모바일 햄버거 */
+.bium-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+}
+.bium-hamburger span {
+  width: 26px !important;
+  height: 2.5px !important;
+  background: #fff !important;
+  border-radius: 2px !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  transition: all 0.3s;
+}
+.bium-mobile-menu {
+  display: none;
+  background: #111;
+  border-top: 1px solid #222;
+}
+.bium-mobile-menu.open {
+  display: block;
+}
+.bium-mobile-menu a {
+  display: block;
+  padding: 16px 40px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid #1a1a1a;
+}
+.bium-mobile-menu a:hover { color: #fff; background: #1a1a1a; }
+
+.gallery-main-img {
+  width: 70%;
+  height: auto;
+  display: inline-block;
+}
+@media (max-width: 768px) {
+  .bium-nav { display: none; }
+  .bium-hamburger { display: flex; }
+  .bium-header-inner { padding: 0 20px; }
+  .gallery-main-img { width: 100%; }
+}
+
+/* ===== 푸터 ===== */
+.bium-footer {
+  background: #F5F5F5;
+  border-top: 1px solid #E0E0E0;
+  padding: 60px 40px 40px;
+}
+.bium-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 48px;
+}
+.bium-footer-logo {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #1A1A1A;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.bium-footer-info {
+  font-size: 13px;
+  color: #666;
+  line-height: 2;
+}
+.bium-footer-info strong {
+  color: #333;
+}
+.bium-footer-copy {
+  font-size: 12px;
+  color: #999;
+  margin-top: 20px;
+}
+.bium-footer-col-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+.bium-footer-phone {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1A1A1A;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.bium-footer-hours {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.bium-footer-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bium-footer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  background: #fff;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.bium-footer-btn:hover {
+  border-color: #333;
+  color: #111;
+}
+.bium-footer-btn.kakao {
+  background: #F9E000;
+  border-color: #F9E000;
+  color: #111;
+}
+.bium-footer-btn.kakao:hover { background: #F0D800; }
+
+.bium-footer-links {
+  border-top: 1px solid #E0E0E0;
+  margin-top: 40px;
+  padding-top: 24px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.bium-footer-links a {
+  font-size: 12px;
+  color: #888;
+  text-decoration: none;
+}
+.bium-footer-links a:hover { color: #333; }
+
+@media (max-width: 900px) {
+  .bium-footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .bium-footer { padding: 40px 20px 32px; }
+}
+
+.page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+.btn-kakao {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F9E000;
+  color: #111;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-kakao:hover {
+  background: #F0D800;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(249,224,0,0.4);
+}
+.btn-pkg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #555;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 1.5px solid #DDDDDD;
+  transition: all 0.2s;
+}
+.btn-pkg:hover {
+  border-color: #B8963C;
+  color: #B8963C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(184,150,60,0.15);
+}
+
+.bium-footer a { color: inherit; text-decoration: none; }
+.bium-footer-btn { color: #333; }
+.bium-footer-links a { color: #888; }
+.bium-footer-links a:hover { color: #333; }
+
+/* ===== 갤러리 ===== */
+.gallery-hero {
+  text-align: center;
+  padding: 64px 40px 40px;
+  background: #fffdf9;
+}
+.gallery-hero h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1A1A1A;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+.gallery-hero p {
+  font-size: 15px;
+  color: #777;
+}
+.gallery-panel {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 900px) {
+  .gallery-panel { padding: 0 20px 60px; margin: 0; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .gallery-hero { padding: 48px 20px 32px; }
+}
+@media (max-width: 560px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+}
+
+.gallery-card {
+  cursor: pointer;
+  overflow: hidden;
+  background: #f2f2ef;
+  position: relative;
+  aspect-ratio: 4/5;
+  transition: transform 0.25s ease;
+}
+.gallery-card:hover { transform: translateY(-4px); }
+.gallery-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-card-overlay {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px 16px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+  color: #fff;
+}
+.gallery-card-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+.gallery-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 14px;
+  grid-column: 1 / -1;
+}
+
+/* ===== 인라인 뷰어 (페이지 안에서 열림, 팝업 아님) ===== */
+.project-viewer {
+  display: none;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+}
+.project-viewer.open { display: block; }
+.viewer-back {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Pretendard', sans-serif;
+  padding: 8px 0;
+  margin-bottom: 0;
+}
+.viewer-back:hover { color: #1A1A1A; }
+.viewer-divider {
+  height: 2px;
+  background: #B8963C;
+  width: 60px;
+  margin-bottom: 24px;
+}
+.viewer-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A1A1A;
+  margin-bottom: 16px;
+}
+.viewer-stage {
+  position: relative;
+  overflow: hidden;
+  background: #f2f2ef;
+}
+.viewer-stage img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.viewer-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.viewer-nav:hover { background: rgba(0,0,0,0.6); }
+.viewer-prev { left: 12px; }
+.viewer-next { right: 12px; }
+.viewer-counter {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+  margin-top: 10px;
+}
+.viewer-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.viewer-thumbs img {
+  width: 64px; height: 64px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0.55;
+  border: 2px solid transparent;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.viewer-thumbs img.active { opacity: 1; border-color: #B8963C; }
+@media (max-width: 768px) {
+  .project-viewer { padding: 0 20px 60px; }
+}
+
+/* ===== 모달 ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin: 0;
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+.modal-close:hover { color: #1A1A1A; }
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.8;
+}
+.modal-body h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin: 20px 0 8px;
+}
+.modal-body h4:first-child { margin-top: 0; }
+.modal-body p { margin: 0 0 8px; }
+.modal-body ul { margin: 0 0 8px; padding-left: 20px; }
+.modal-body ul li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/index.html" class="bium-logo"><img src="./images/title.png" alt="VE:UM & TILE" style="height:36px; width:auto; display:block;"></a>
+    <nav>
+      <ul class="bium-nav">
+        <li><a href="/package.html">시공 패키지</a></li>
+        <li><a href="/bathroom.html">욕실 패키지</a></li>
+        <li><a href="/gallery.html">시공 사례</a></li>
+        <li class="nav-cta"><a href="/contact.html">견적 문의</a></li>
+        <li class="nav-box"><a href="https://box.veum.kr" target="_blank">비움박스 ↗</a></li>
+      </ul>
+    </nav>
+    <div class="bium-hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="bium-mobile-menu" id="biumMobileMenu">
+    <a href="/package.html">시공 패키지</a>
+    <a href="/bathroom.html">욕실 패키지</a>
+    <a href="/gallery.html">시공 사례</a>
+    <a href="/contact.html">견적 문의</a>
+    <a href="https://box.veum.kr" target="_blank" style="color:#aaa;">비움박스 ↗</a>
+  </div>
+</header>
+
+<main style="background:#fffdf9;">
+
+<div class="gallery-hero">
+  <h1>시공 사례</h1>
+  <p>비움앤타일이 직접 진행한 현장을 확인해보세요</p>
+</div>
+
+<div class="gallery-panel" id="galleryPanel">
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-empty">불러오는 중...</div>
+  </div>
+</div>
+
+<div class="project-viewer" id="projectViewer">
+  <button class="viewer-back" onclick="closeProject()">← 목록으로</button>
+  <div class="viewer-divider"></div>
+  <div class="viewer-title" id="viewerTitle"></div>
+  <div class="viewer-stage">
+    <img id="viewerImg" src="" alt="">
+    <button class="viewer-nav viewer-prev" onclick="vPrev()">‹</button>
+    <button class="viewer-nav viewer-next" onclick="vNext()">›</button>
+  </div>
+  <div class="viewer-counter" id="viewerCounter"></div>
+  <div class="viewer-thumbs" id="viewerThumbs"></div>
+</div>
+
+  <!-- CTA 버튼 -->
+  <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; padding-bottom:80px;">
+    <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="btn-kakao">
+      💬 시공 문의 먼저 하기
+    </a>
+    <a href="/package.html" class="btn-pkg">
+      5IN1 패키지 보기 →
+    </a>
+  </div>
+
+</main>
+
+<footer class="bium-footer">
+  <div class="bium-footer-inner">
+    <!-- 회사 정보 -->
+    <div>
+      <div class="bium-footer-logo">VE:UM &amp; TILE PARTNERS</div>
+      <div class="bium-footer-info">
+        <strong>비움앤타일 파트너스</strong><br>
+        대표. 김영민<br>
+        사업자등록번호. 362-65-00396<br>
+        경기도 성남시 수정구 청계산로 1길 19 2층<br>
+        Tel. 010-6548-8753<br>
+        서울·경기 전 지역 서비스
+      </div>
+      <div class="bium-footer-copy">
+        COPYRIGHT© 비움앤타일 파트너스. ALL RIGHTS RESERVED.
+      </div>
+    </div>
+
+    <!-- 고객센터 -->
+    <div>
+      <div class="bium-footer-col-title">고객센터</div>
+      <div class="bium-footer-phone">010-6548-8753</div>
+      <div class="bium-footer-hours">
+        평일 오전 9시 - 오후 6시<br>
+        토요일 오전 9시 - 오후 3시<br>
+        일요일 및 공휴일 휴무
+      </div>
+      <div class="bium-footer-btns">
+        <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="bium-footer-btn kakao">💬 카카오톡 문의</a>
+        <a href="https://forms.gle/hktN1bN6bsx8ugiR9" target="_blank" class="bium-footer-btn">📋 견적 문의</a>
+      </div>
+    </div>
+
+    <!-- 서비스 지역 -->
+    <div>
+      <div class="bium-footer-col-title">서비스 안내</div>
+      <div class="bium-footer-hours">
+        <strong style="color:#333">서비스 지역</strong><br>
+        서울 · 경기 전 지역<br><br>
+        <strong style="color:#333">제공 서비스</strong><br>
+        철거 · 설비 · 타일 · 도기세팅 · 폐기물처리<br>
+        5IN1 원스톱 리모델링
+      </div>
+    </div>
+  </div>
+
+  <div class="bium-footer-links">
+    <a href="#" onclick="openModal('modalTerms'); return false;">이용약관</a>
+    <a href="#" onclick="openModal('modalPrivacy'); return false;">개인정보처리방침</a>
+    <a href="/contact.html">견적 문의</a>
+  </div>
+</footer>
+
+<!-- 이용약관 모달 -->
+<div class="modal-overlay" id="modalTerms" onclick="closeModal('modalTerms')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>이용약관</h3>
+      <button class="modal-close" onclick="closeModal('modalTerms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>제1조 (목적)</h4>
+      <p>본 약관은 비움앤타일 파트너스(이하 "회사")가 운영하는 웹사이트(veum.kr, 이하 "사이트")를 통해 제공하는 타일 시공 견적 상담 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.</p>
+      <h4>제2조 (서비스 내용)</h4>
+      <p>회사는 다음과 같은 서비스를 제공합니다.</p>
+      <ul>
+        <li>욕실, 주방 등 타일 시공 견적 상담</li>
+        <li>철거·타일·폐기물 처리 일괄 서비스 안내</li>
+        <li>카카오톡 및 구글폼을 통한 온라인 상담</li>
+      </ul>
+      <h4>제3조 (서비스 이용)</h4>
+      <p>서비스 이용은 무료이며, 견적 상담 신청 시 필요한 최소한의 정보를 제공하여야 합니다. 허위 정보 제공으로 인한 불이익은 이용자 본인이 부담합니다.</p>
+      <h4>제4조 (면책조항)</h4>
+      <p>회사는 이용자가 제공한 정보의 부정확으로 인해 발생한 손해에 대해 책임을 지지 않습니다. 또한 천재지변, 시스템 장애 등 불가항력적 사유로 인한 서비스 중단에 대해 책임을 지지 않습니다.</p>
+      <h4>제5조 (약관의 변경)</h4>
+      <p>회사는 필요 시 약관을 변경할 수 있으며, 변경된 약관은 사이트에 공지함으로써 효력이 발생합니다.</p>
+      <h4>제6조 (준거법)</h4>
+      <p>본 약관은 대한민국 법률에 따라 해석되며, 분쟁 발생 시 회사 소재지 관할 법원을 합의 관할로 합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 개인정보처리방침 모달 -->
+<div class="modal-overlay" id="modalPrivacy" onclick="closeModal('modalPrivacy')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>개인정보처리방침</h3>
+      <button class="modal-close" onclick="closeModal('modalPrivacy')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>비움앤타일 파트너스(이하 "회사")는 개인정보 보호법에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하게 처리할 수 있도록 다음과 같이 개인정보처리방침을 수립·공개합니다.</p>
+      <h4>1. 수집하는 개인정보 항목</h4>
+      <ul>
+        <li>필수: 이름, 연락처(전화번호)</li>
+        <li>선택: 시공 예정 지역, 시공 공간 종류 및 크기, 요청 사항</li>
+      </ul>
+      <h4>2. 개인정보 수집 목적</h4>
+      <ul>
+        <li>타일 시공 견적 상담 및 서비스 제공</li>
+        <li>상담 내용 확인 및 답변</li>
+        <li>서비스 품질 개선</li>
+      </ul>
+      <h4>3. 개인정보 보유 및 이용 기간</h4>
+      <p>수집된 개인정보는 상담 종료 후 <strong>3년</strong>간 보관 후 파기합니다. 단, 관계 법령에 의해 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관합니다.</p>
+      <h4>4. 개인정보의 제3자 제공</h4>
+      <p>회사는 이용자의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만, 이용자가 사전에 동의한 경우 또는 법령에 의한 경우는 예외로 합니다.</p>
+      <h4>5. 개인정보 파기 절차 및 방법</h4>
+      <p>보유 기간이 경과된 개인정보는 지체 없이 파기합니다. 전자적 파일 형태는 복구 불가능한 방법으로 삭제하며, 서면은 분쇄 또는 소각합니다.</p>
+      <h4>6. 개인정보 보호책임자</h4>
+      <ul>
+        <li>담당자: 비움앤타일 파트너스 대표</li>
+        <li>이메일: veumpartners@gmail.com</li>
+      </ul>
+      <h4>7. 이용자의 권리</h4>
+      <p>이용자는 언제든지 수집된 개인정보의 열람, 정정, 삭제를 요청할 수 있습니다. 요청은 위 이메일로 문의해 주시기 바랍니다.</p>
+      <p style="margin-top:20px; color:#888; font-size:13px;">시행일: 2025년 1월 1일</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function toggleMenu() {
+  var menu = document.getElementById('biumMobileMenu');
+  menu.classList.toggle('open');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(function(m) {
+      m.classList.remove('open');
+    });
+    document.body.style.overflow = '';
+  }
+  if (document.getElementById('projectViewer').classList.contains('open')) {
+    if (e.key === 'ArrowRight') vNext();
+    if (e.key === 'ArrowLeft') vPrev();
+  }
+});
+
+/* ===== 갤러리: Supabase 연동 ===== */
+const SUPABASE_URL = 'https://zpsloypsfcnidqxjkvlo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GmeZMdD9GgRKMFuPzQJUSA_0B4sxJMp';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let allProjects = [];
+let currentViewerImages = [];
+let currentViewerIndex = 0;
+let currentViewerProject = null;
+
+async function loadGallery() {
+  const grid = document.getElementById('galleryGrid');
+  const { data: projects, error } = await sb
+    .from('portfolio_projects')
+    .select('*, portfolio_images(id, image_url, sort_order)')
+    .eq('is_published', true)
+    .order('sort_order', { ascending: true });
+
+  if (error) {
+    grid.innerHTML = '<div class="gallery-empty">불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>';
+    console.error(error);
+    return;
+  }
+  if (!projects || projects.length === 0) {
+    grid.innerHTML = '<div class="gallery-empty">등록된 시공 사례가 아직 없습니다.</div>';
+    return;
+  }
+
+  allProjects = projects.map(p => ({
+    ...p,
+    images: (p.portfolio_images || []).sort((a,b) => a.sort_order - b.sort_order)
+  }));
+
+  renderGrid();
+}
+
+function renderGrid() {
+  const grid = document.getElementById('galleryGrid');
+
+  if (allProjects.length === 0) {
+    grid.innerHTML = '<div class="gallery-empty">등록된 시공 사례가 아직 없습니다.</div>';
+    return;
+  }
+
+  grid.innerHTML = allProjects.map(p => `
+    <div class="gallery-card" onclick="openProject('${p.id}')">
+      <img src="${p.cover_image_url}" alt="${escapeHtml(p.title)}" loading="lazy">
+      <div class="gallery-card-overlay">
+        <div class="gallery-card-title">${escapeHtml(p.title)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML;
+}
+
+function openProject(projectId) {
+  const project = allProjects.find(p => p.id === projectId);
+  if (!project) return;
+  currentViewerProject = project;
+  currentViewerImages = project.images.length ? project.images.map(i => i.image_url) : [project.cover_image_url];
+  currentViewerIndex = 0;
+
+  document.getElementById('galleryPanel').style.display = 'none';
+  document.getElementById('projectViewer').classList.add('open');
+  document.getElementById('viewerTitle').textContent = project.title;
+  renderThumbs();
+  updateViewer();
+
+  document.getElementById('projectViewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function closeProject() {
+  document.getElementById('projectViewer').classList.remove('open');
+  document.getElementById('galleryPanel').style.display = '';
+  document.getElementById('galleryPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function renderThumbs() {
+  const box = document.getElementById('viewerThumbs');
+  if (currentViewerImages.length < 2) { box.innerHTML = ''; return; }
+  box.innerHTML = currentViewerImages.map((url, i) => `
+    <img src="${url}" class="${i === currentViewerIndex ? 'active' : ''}" onclick="goToImage(${i})">
+  `).join('');
+}
+function goToImage(i) { currentViewerIndex = i; updateViewer(); }
+function updateViewer() {
+  document.getElementById('viewerImg').src = currentViewerImages[currentViewerIndex];
+  document.getElementById('viewerCounter').textContent = (currentViewerIndex+1) + ' / ' + currentViewerImages.length;
+  document.querySelectorAll('.viewer-thumbs img').forEach((el, i) => el.classList.toggle('active', i === currentViewerIndex));
+}
+function vNext() { currentViewerIndex = (currentViewerIndex+1) % currentViewerImages.length; updateViewer(); }
+function vPrev() { currentViewerIndex = (currentViewerIndex-1+currentViewerImages.length) % currentViewerImages.length; updateViewer(); }
+
+// 모바일 스와이프
+(function(){
+  let startX = 0;
+  const stage = document.querySelector('.viewer-stage');
+  if (!stage) return;
+  stage.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  stage.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (Math.abs(diff) > 50) diff > 0 ? vPrev() : vNext();
+  });
+})();
+
+loadGallery();
+</script>
+
+</body>
+</html>
