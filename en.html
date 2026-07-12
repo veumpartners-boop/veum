@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ve:um &amp; Tile Partners — Renovation &amp; Tile Specialists in Korea</title>
+<meta property="og:title" content="Ve:um & Tile Partners — Renovation & Tile Specialists in Korea">
+<meta property="og:description" content="10 years of tile installation experience in Sydney, Australia — now serving international clients in Korea. English consultation available.">
+<meta property="og:image" content="https://veum.kr/images/og-cover.jpg">
+<meta property="og:url" content="https://veum.kr/en.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Pretendard', -apple-system, 'Segoe UI', sans-serif; color: #1A1A1A; background: #fffdf9; }
+
+/* ===== 헤더 ===== */
+.bium-header { background: #111111; width: 100%; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+.bium-header-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.bium-logo img { height: 34px; width: auto; display: block; }
+.lang-switch { color: #aaa; text-decoration: none; font-size: 13px; font-weight: 600; border: 1.5px solid #444; padding: 7px 14px; border-radius: 4px; }
+.lang-switch:hover { border-color: #888; color: #fff; }
+@media (max-width: 600px) { .bium-header-inner { padding: 0 20px; } }
+
+/* ===== 히어로 ===== */
+.hero { position: relative; height: 58vh; min-height: 400px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #1A1A1A; }
+.hero img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+.hero-content { position: relative; z-index: 2; color: #fff; padding: 0 20px; max-width: 680px; }
+.hero-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #E8CB7E; text-transform: uppercase; margin-bottom: 16px; }
+.hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 16px; line-height: 1.35; }
+.hero p { font-size: 16px; color: #ddd; line-height: 1.7; }
+@media (max-width: 768px) { .hero h1 { font-size: 26px; } .hero p { font-size: 14px; } }
+
+/* ===== 공통 섹션 ===== */
+.section { max-width: 1000px; margin: 0 auto; padding: 72px 40px; }
+.section-title { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #B8963C; text-transform: uppercase; margin-bottom: 12px; }
+.section-heading { font-size: 26px; font-weight: 800; color: #1A1A1A; margin-bottom: 28px; letter-spacing: -0.4px; }
+@media (max-width: 768px) { .section { padding: 52px 20px; } .section-heading { font-size: 21px; } }
+
+/* ===== 소개 ===== */
+.intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.intro-text p { font-size: 15px; line-height: 1.9; color: #444; margin-bottom: 18px; }
+.intro-text strong { color: #1A1A1A; }
+.intro-img img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+@media (max-width: 900px) { .intro-grid { grid-template-columns: 1fr; gap: 28px; } .intro-img { order: -1; } }
+
+/* ===== 서비스 ===== */
+.services-block { background: #F4EFE5; }
+.services-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 8px; }
+.service-card { background: #fff; padding: 24px 16px; text-align: center; }
+.service-card .num { font-size: 12px; font-weight: 700; color: #B8963C; letter-spacing: 1px; margin-bottom: 10px; }
+.service-card .name { font-size: 15px; font-weight: 700; color: #1A1A1A; margin-bottom: 6px; }
+.service-card .desc { font-size: 12.5px; color: #777; line-height: 1.6; }
+@media (max-width: 768px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ===== 경력 ===== */
+.career-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #eee; margin-top: 8px; }
+.career-col { padding: 36px; }
+.career-col.au { background: #1A1A1A; color: #fff; }
+.career-col.kr { background: #fff; color: #1A1A1A; }
+.career-col-flag { font-size: 26px; margin-bottom: 10px; }
+.career-col-years { font-size: 20px; font-weight: 800; margin-bottom: 18px; }
+.career-col ul { list-style: none; }
+.career-col li { font-size: 14px; line-height: 1.75; margin-bottom: 14px; padding-left: 18px; position: relative; }
+.career-col li::before { content: '—'; position: absolute; left: 0; opacity: 0.5; }
+.career-col.au li { color: #ddd; }
+.career-col.kr li { color: #555; }
+@media (max-width: 900px) { .career-columns { grid-template-columns: 1fr; } }
+
+.note-box { background: #fafafa; border-left: 3px solid #B8963C; padding: 16px 20px; margin-top: 24px; font-size: 13.5px; color: #666; line-height: 1.8; }
+
+/* ===== 쇼케이스 ===== */
+.showcase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 8px; }
+.showcase-item { position: relative; aspect-ratio: 1/1; overflow: hidden; background: #f2f2ef; }
+.showcase-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 768px) { .showcase-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ===== 문의 ===== */
+.contact-block { background: #1A1A1A; text-align: center; padding: 72px 20px; }
+.contact-block .section-title { color: #E8CB7E; }
+.contact-block h2 { color: #fff; font-size: 26px; font-weight: 800; margin-bottom: 12px; }
+.contact-block p { color: #bbb; font-size: 14.5px; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+.contact-options { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; max-width: 560px; margin: 0 auto; }
+.contact-card {
+  flex: 1; min-width: 220px; background: #232323; border: 1px solid #333; border-radius: 8px;
+  padding: 28px 20px; text-decoration: none; transition: all 0.2s;
+}
+.contact-card:hover { border-color: #B8963C; background: #262626; }
+.contact-card .icon { font-size: 26px; margin-bottom: 12px; }
+.contact-card .label { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.contact-card .sub { font-size: 12.5px; color: #999; }
+
+/* ===== 푸터 ===== */
+.bium-footer-min { background: #F5F5F5; border-top: 1px solid #E0E0E0; padding: 32px 20px; text-align: center; }
+.bium-footer-min p { font-size: 12px; color: #999; line-height: 1.9; }
+.bium-footer-min a { color: #888; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/index.html" class="bium-logo"><img src="/images/title.png" alt="VE:UM & TILE"></a>
+    <a href="/index.html" class="lang-switch">한국어 ↗</a>
+  </div>
+</header>
+
+<!-- 히어로 -->
+<section class="hero">
+  <img src="/images/about/about-kitchen.jpg" alt="">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Ve:um &amp; Tile Partners</div>
+    <h1>Renovation &amp; Tile Specialists in Korea — English Consultation Available</h1>
+    <p>From demolition to tile installation and fixture setup — one team, one contact, handled in English from start to finish.</p>
+  </div>
+</section>
+
+<!-- 소개 -->
+<section class="section">
+  <div class="section-title">About</div>
+  <div class="intro-grid">
+    <div class="intro-text">
+      <p>I spent <strong>10 years working on tile projects in Sydney, Australia</strong> — apartments, hotels, retail spaces, and high-end residential builds. A few years ago, I moved to Korea and started Ve:um &amp; Tile Partners.</p>
+      <p><strong>I speak English</strong>, so if you're living in Korea and don't speak fluent Korean, you can talk to me directly — no translation, no miscommunication about what you actually want.</p>
+      <p>Our on-site crew is based in Korea, hired and trained to the standard I built through my career abroad. I stay closely involved in every project, from the first consultation to the final walkthrough.</p>
+    </div>
+    <div class="intro-img">
+      <img src="/images/about/about-terrazzo.jpg" alt="Tile work">
+    </div>
+  </div>
+</section>
+
+<!-- 서비스 -->
+<section class="services-block">
+  <div class="section" style="padding-top:64px; padding-bottom:64px;">
+    <div class="section-title">What We Do</div>
+    <div class="section-heading">One team, five services</div>
+    <div class="services-grid">
+      <div class="service-card"><div class="num">01</div><div class="name">Demolition</div><div class="desc">Removing existing tile, fixtures &amp; flooring</div></div>
+      <div class="service-card"><div class="num">02</div><div class="name">Plumbing &amp; Waterproofing</div><div class="desc">Prepping the space before tiling</div></div>
+      <div class="service-card"><div class="num">03</div><div class="name">Tile Installation</div><div class="desc">Bathrooms, kitchens, floors, walls</div></div>
+      <div class="service-card"><div class="num">04</div><div class="name">Fixture Setup</div><div class="desc">Toilets, sinks, showers</div></div>
+      <div class="service-card"><div class="num">05</div><div class="name">Waste Removal</div><div class="desc">On-site debris pickup during the job</div></div>
+    </div>
+    <p style="font-size:13.5px; color:#777; margin-top:24px; line-height:1.8;">
+      You can book the full one-stop process, or just the part you need — tile work only, waste removal only, and so on.
+    </p>
+  </div>
+</section>
+
+<!-- 경력 -->
+<section class="section">
+  <div class="section-title">Background</div>
+  <div class="section-heading">Where the experience comes from</div>
+  <div class="career-columns">
+    <div class="career-col au">
+      <div class="career-col-flag">🇦🇺</div>
+      <div class="career-col-years">10+ Years — Sydney, Australia</div>
+      <ul>
+        <li>Worked on projects for major construction companies (apartments, hotels, retail, high-end homes)</li>
+        <li>Led tile installation crews — site management, scheduling, quality control</li>
+        <li>Specialized in large-format tile, sandstone, and external wall cladding</li>
+      </ul>
+    </div>
+    <div class="career-col kr">
+      <div class="career-col-flag">🇰🇷</div>
+      <div class="career-col-years" id="krYearsEn">5+ Years — Korea, ongoing</div>
+      <ul>
+        <li>Running Ve:um &amp; Tile Partners, applying the same standards learned in Australia to Korean job sites</li>
+        <li>Direct communication with clients throughout the project, in English or Korean</li>
+        <li>Local crew hired and trained in Korea, working under my direct supervision</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note-box">
+    The career above is my own, built over 10+ years working in Australia. Our current crew in Korea is made up of local tradespeople — what clients are trusting is the communication, problem-solving, and quality control I bring to every job, based on that experience.
+  </div>
+</section>
+
+<!-- 쇼케이스 -->
+<section class="section">
+  <div class="section-title">Work Samples</div>
+  <div class="section-heading">A few projects from my time in Australia</div>
+  <div class="showcase-grid">
+    <div class="showcase-item"><img src="/images/about/sc-marble.jpg" alt="Marble bathroom"></div>
+    <div class="showcase-item"><img src="/images/about/au-hotel.jpg" alt="Hotel lobby"></div>
+    <div class="showcase-item"><img src="/images/about/sc-herringbone.jpg" alt="Herringbone kitchen floor"></div>
+    <div class="showcase-item"><img src="/images/about/au-penthouse.jpg" alt="Penthouse bathroom"></div>
+  </div>
+  <p style="font-size:13.5px; color:#777; margin-top:20px;">
+    Want to see recent work in Korea? Check our <a href="/gallery/" style="color:#B8963C; font-weight:600; text-decoration:none;">project gallery ↗</a>
+  </p>
+</section>
+
+<!-- 문의 -->
+<section class="contact-block">
+  <div class="section-title">Get In Touch</div>
+  <h2>Let's talk about your space</h2>
+  <p>Reach out however's easiest for you — I'll reply in English.</p>
+  <div class="contact-options">
+    <a href="http://pf.kakao.com/_XxbNjX/chat" target="_blank" class="contact-card">
+      <div class="icon">💬</div>
+      <div class="label">KakaoTalk</div>
+      <div class="sub">Message us directly</div>
+    </a>
+    <a href="mailto:veumpartners@gmail.com?subject=Renovation%20Inquiry" class="contact-card">
+      <div class="icon">✉️</div>
+      <div class="label">Email</div>
+      <div class="sub">veumpartners@gmail.com</div>
+    </a>
+  </div>
+</section>
+
+<footer class="bium-footer-min">
+  <p>
+    Ve:um &amp; Tile Partners · Serving Seoul &amp; Gyeonggi-do<br>
+    <a href="/index.html">veum.kr</a> · <a href="mailto:veumpartners@gmail.com">veumpartners@gmail.com</a>
+  </p>
+</footer>
+
+<script>
+// 한국 경력 연차 자동 계산
+var KR_START_YEAR = 2021;
+var el = document.getElementById('krYearsEn');
+if (el) {
+  var years = new Date().getFullYear() - KR_START_YEAR;
+  el.textContent = years + '+ Years — Korea, ongoing';
+}
+</script>
+
+</body>
+</html>
