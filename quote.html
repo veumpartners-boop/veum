@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>견적요청서 작성 — 비움앤타일 파트너스</title>
+<meta property="og:title" content="견적요청서 작성 — 비움앤타일 파트너스">
+<meta property="og:description" content="공사 정보와 사진을 남겨주시면 확인 후 연락드립니다">
+<meta property="og:image" content="https://veum.kr/images/og-cover.jpg">
+<meta property="og:url" content="https://veum.kr/quote.html">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Pretendard', -apple-system, sans-serif; color: #1A1A1A; background: #fffdf9; }
+
+.bium-header { background: #111111; width: 100%; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+.bium-header-inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.bium-logo img { height: 34px; width: auto; display: block; }
+.back-link { color: #aaa; text-decoration: none; font-size: 13px; font-weight: 600; }
+.back-link:hover { color: #fff; }
+@media (max-width: 600px) { .bium-header-inner { padding: 0 20px; } }
+
+/* ===== 히어로 ===== */
+.q-hero { position: relative; height: 32vh; min-height: 220px; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; background: #1A1A1A; }
+.q-hero img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.45; }
+.q-hero-content { position: relative; z-index: 2; color: #fff; padding: 0 20px; }
+.q-hero .q-eyebrow { color: #E8CB7E; }
+.q-hero h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+.q-hero p { font-size: 14px; color: #ddd; }
+
+.q-wrap { max-width: 640px; margin: 0 auto; padding: 44px 20px 100px; }
+.q-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #B8963C; text-transform: uppercase; margin-bottom: 10px; }
+.q-title { font-size: 26px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+.q-sub { font-size: 14px; color: #777; line-height: 1.8; margin-bottom: 32px; }
+
+/* ===== 섹션 카드 ===== */
+.q-section { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 28px 24px; margin-bottom: 20px; }
+.q-section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+.q-section-num { font-size: 12px; font-weight: 800; color: #B8963C; letter-spacing: 1px; }
+.q-section-title { font-size: 15.5px; font-weight: 700; color: #1A1A1A; }
+
+.q-field { margin-bottom: 22px; }
+.q-field:last-child { margin-bottom: 0; }
+.q-label { display: block; font-size: 13.5px; font-weight: 700; color: #333; margin-bottom: 8px; }
+.q-label .required { color: #B8963C; margin-left: 2px; }
+.q-label .opt { font-weight: 500; color: #aaa; font-size: 12px; margin-left: 4px; }
+.q-input, .q-select, .q-textarea {
+  width: 100%; padding: 12px 14px; border: 1.5px solid #ddd; border-radius: 6px;
+  font-size: 14.5px; font-family: inherit; background: #fff; color: #1A1A1A;
+}
+.q-input:focus, .q-select:focus, .q-textarea:focus { outline: none; border-color: #B8963C; }
+.q-textarea { resize: vertical; min-height: 110px; }
+
+.q-checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.q-check-item {
+  border: 1.5px solid #ddd; border-radius: 20px; padding: 8px 16px; font-size: 13.5px;
+  cursor: pointer; user-select: none; transition: all 0.15s; color: #555;
+}
+.q-check-item input { display: none; }
+.q-check-item.active { background: #1A1A1A; border-color: #1A1A1A; color: #fff; }
+
+.q-dropzone {
+  border: 2px dashed #ccc; border-radius: 8px; padding: 24px; text-align: center;
+  color: #888; font-size: 13px; cursor: pointer; background: #fafafa;
+}
+.q-dropzone.drag { border-color: #B8963C; background: #fdf8ee; }
+.q-dropzone input { display: none; }
+.q-thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.q-thumb { position: relative; width: 72px; height: 72px; border-radius: 6px; overflow: hidden; border: 1.5px solid #eee; }
+.q-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.q-thumb .rm { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.6); color: #fff; border: none; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; cursor: pointer; }
+
+.q-consent { display: flex; align-items: flex-start; gap: 10px; font-size: 12.5px; color: #777; line-height: 1.7; margin: 20px 4px; }
+.q-consent input { margin-top: 3px; flex-shrink: 0; }
+
+.q-submit {
+  width: 100%; background: #1A1A1A; color: #fff; border: none; padding: 16px; border-radius: 6px;
+  font-size: 15.5px; font-weight: 700; cursor: pointer; margin-top: 4px; font-family: inherit;
+}
+.q-submit:hover { background: #000; }
+.q-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+.q-success { display: none; text-align: center; padding: 60px 20px; }
+.q-success .icon { font-size: 44px; margin-bottom: 16px; }
+.q-success h2 { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+.q-success p { font-size: 14px; color: #777; line-height: 1.8; }
+.q-success a { display: inline-block; margin-top: 24px; color: #B8963C; font-weight: 700; text-decoration: none; font-size: 14px; }
+
+/* 스팸 방지용 허니팟 (사람 눈에 안 보임) */
+.hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+</style>
+</head>
+<body>
+
+<header class="bium-header">
+  <div class="bium-header-inner">
+    <a href="/index.html" class="bium-logo"><img src="/images/title.png" alt="VE:UM & TILE"></a>
+    <a href="/contact.html" class="back-link">← 견적 문의로 돌아가기</a>
+  </div>
+</header>
+
+<!-- 히어로 -->
+<section class="q-hero">
+  <img src="/images/about/sc-marble.jpg" alt="">
+  <div class="q-hero-content">
+    <div class="q-eyebrow">Quote Request</div>
+    <h1>견적요청서 작성</h1>
+    <p>공사 정보와 사진을 남겨주시면 확인 후 연락드립니다</p>
+  </div>
+</section>
+
+<div class="q-wrap">
+  <div id="qFormBlock">
+    <div class="q-sub">대략적인 정보만으로도 충분해요. 순서대로 작성해주세요.</div>
+
+    <form id="quoteForm">
+      <!-- 허니팟 (봇 방지) -->
+      <div class="hp-field"><label>웹사이트</label><input type="text" name="website" id="hpField" tabindex="-1" autocomplete="off"></div>
+
+      <div class="q-section">
+      <div class="q-section-head"><span class="q-section-num">01</span><span class="q-section-title">연락처 정보</span></div>
+
+      <div class="q-field">
+        <label class="q-label">이름<span class="required">*</span></label>
+        <input type="text" class="q-input" id="f_name" required placeholder="홍길동">
+      </div>
+
+      <div class="q-field">
+        <label class="q-label">연락처<span class="required">*</span></label>
+        <input type="tel" class="q-input" id="f_phone" required placeholder="010-0000-0000">
+      </div>
+
+      <div class="q-field">
+        <label class="q-label">이메일<span class="opt">(선택)</span></label>
+        <input type="email" class="q-input" id="f_email" placeholder="example@email.com">
+      </div>
+      </div>
+
+      <div class="q-section">
+      <div class="q-section-head"><span class="q-section-num">02</span><span class="q-section-title">공사 정보</span></div>
+
+      <div class="q-field">
+        <label class="q-label">시공 희망 지역<span class="opt">(선택)</span></label>
+        <input type="text" class="q-input" id="f_region" placeholder="예: 경기 성남시">
+      </div>
+
+      <div class="q-field">
+        <label class="q-label">공사 공간<span class="opt">(중복 선택 가능)</span></label>
+        <div class="q-checks" id="spaceChecks">
+          <label class="q-check-item"><input type="checkbox" value="욕실">욕실</label>
+          <label class="q-check-item"><input type="checkbox" value="주방">주방</label>
+          <label class="q-check-item"><input type="checkbox" value="거실">거실</label>
+          <label class="q-check-item"><input type="checkbox" value="발코니">발코니</label>
+          <label class="q-check-item"><input type="checkbox" value="상가">상가</label>
+          <label class="q-check-item"><input type="checkbox" value="기타">기타</label>
+        </div>
+      </div>
+
+      <div class="q-field">
+        <label class="q-label">평수<span class="opt">(선택, 대략적으로)</span></label>
+        <input type="text" class="q-input" id="f_size" placeholder="예: 25평, 잘 모르면 비워두셔도 됩니다">
+      </div>
+
+      <div class="q-field">
+        <label class="q-label">희망 시공 시기</label>
+        <select class="q-select" id="f_timing">
+          <option value="">선택 안 함</option>
+          <option value="가능한 빨리">가능한 빨리</option>
+          <option value="1개월 이내">1개월 이내</option>
+          <option value="3개월 이내">3개월 이내</option>
+          <option value="아직 미정">아직 미정</option>
+        </select>
+      </div>
+
+      <div class="q-field">
+        <label class="q-label">상세 요청사항<span class="opt">(선택)</span></label>
+        <textarea class="q-textarea" id="f_message" placeholder="현재 상태, 원하는 스타일, 궁금한 점 등 자유롭게 적어주세요"></textarea>
+      </div>
+      </div>
+
+      <div class="q-section">
+      <div class="q-section-head"><span class="q-section-num">03</span><span class="q-section-title">사진 첨부</span></div>
+
+      <div class="q-field">
+        <label class="q-label">현장 사진<span class="opt">(선택, 있으면 더 정확한 상담이 가능해요)</span></label>
+        <div class="q-dropzone" id="dropzone">
+          클릭하거나 파일을 끌어다 놓으세요
+          <input type="file" id="fileInput" accept="image/*" multiple>
+        </div>
+        <div class="q-thumbs" id="thumbs"></div>
+      </div>
+      </div>
+
+      <div class="q-consent">
+        <input type="checkbox" id="f_consent" required>
+        <label for="f_consent">
+          개인정보 수집·이용에 동의합니다. (수집 항목: 이름, 연락처, 이메일 / 목적: 견적 상담 / 보유 기간: 상담 종료 후 3년)
+        </label>
+      </div>
+
+      <button type="submit" class="q-submit" id="submitBtn">견적요청서 제출하기</button>
+    </form>
+  </div>
+
+  <div class="q-success" id="qSuccess">
+    <div class="icon">✅</div>
+    <h2>요청서가 접수됐어요</h2>
+    <p>남겨주신 연락처로 확인 후 빠르게 연락드릴게요.<br>급하시면 카카오톡으로도 문의 주세요.</p>
+    <a href="/contact.html">← 견적 문의 페이지로 돌아가기</a>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://zpsloypsfcnidqxjkvlo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GmeZMdD9GgRKMFuPzQJUSA_0B4sxJMp';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let selectedFiles = [];
+
+// 공간 선택 체크박스 토글
+document.querySelectorAll('.q-check-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const input = item.querySelector('input');
+    input.checked = !input.checked;
+    item.classList.toggle('active', input.checked);
+  });
+});
+
+// 사진 업로드 dropzone
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault(); dropzone.classList.remove('drag');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', () => { addFiles(Array.from(fileInput.files)); fileInput.value = ''; });
+
+function addFiles(files) {
+  files.filter(f => f.type.startsWith('image/')).forEach(file => {
+    selectedFiles.push({ file, previewUrl: URL.createObjectURL(file) });
+  });
+  renderThumbs();
+}
+function removeFile(idx) { selectedFiles.splice(idx, 1); renderThumbs(); }
+function renderThumbs() {
+  const box = document.getElementById('thumbs');
+  box.innerHTML = selectedFiles.map((f, i) => `
+    <div class="q-thumb">
+      <img src="${f.previewUrl}">
+      <button type="button" class="rm" onclick="removeFile(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// 폼 제출
+document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // 허니팟 체크 (봇이면 값이 채워져 있음 -> 조용히 무시)
+  if (document.getElementById('hpField').value.trim() !== '') {
+    document.getElementById('qFormBlock').style.display = 'none';
+    document.getElementById('qSuccess').style.display = 'block';
+    return;
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '제출 중...';
+
+  try {
+    const spaceTypes = Array.from(document.querySelectorAll('#spaceChecks input:checked')).map(i => i.value);
+
+    // 사진 업로드
+    const photoUrls = [];
+    for (const f of selectedFiles) {
+      const fileName = `${Date.now()}_${Math.random().toString(36).slice(2,8)}_${f.file.name}`;
+      const { error: upErr } = await sb.storage.from('quote-photos').upload(fileName, f.file);
+      if (upErr) throw upErr;
+      const { data: urlData } = sb.storage.from('quote-photos').getPublicUrl(fileName);
+      photoUrls.push(urlData.publicUrl);
+    }
+
+    const { error } = await sb.from('quote_requests').insert({
+      name: document.getElementById('f_name').value.trim(),
+      phone: document.getElementById('f_phone').value.trim(),
+      email: document.getElementById('f_email').value.trim() || null,
+      region: document.getElementById('f_region').value.trim() || null,
+      space_types: spaceTypes,
+      size_pyeong: document.getElementById('f_size').value.trim() || null,
+      preferred_timing: document.getElementById('f_timing').value || null,
+      message: document.getElementById('f_message').value.trim() || null,
+      photo_urls: photoUrls
+    });
+
+    if (error) throw error;
+
+    document.getElementById('qFormBlock').style.display = 'none';
+    document.getElementById('qSuccess').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } catch (err) {
+    console.error(err);
+    alert('제출 중 문제가 발생했어요. 잠시 후 다시 시도해주시거나 카카오톡으로 문의해주세요.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = '견적요청서 제출하기';
+  }
+});
+</script>
+
+</body>
+</html>
