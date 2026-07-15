@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관리자 허브 — 비움앤타일</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Pretendard', sans-serif; background: #F5F5F5; color: #1A1A1A; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 60px 20px 80px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: #B8963C; text-transform: uppercase; margin-bottom: 10px; }
+h1 { font-size: 24px; font-weight: 800; margin-bottom: 36px; }
+
+.cards { display: grid; gap: 14px; }
+.card {
+  display: flex; align-items: center; gap: 18px; background: #fff; border-radius: 10px;
+  padding: 22px 24px; text-decoration: none; color: inherit; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  transition: transform 0.15s, box-shadow 0.15s; position: relative;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+.card .icon { font-size: 26px; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; background: #F4EFE5; border-radius: 10px; flex-shrink: 0; }
+.card .body { flex: 1; }
+.card .title { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.card .desc { font-size: 12.5px; color: #888; }
+.card .arrow { color: #ccc; font-size: 18px; }
+.card .badge {
+  position: absolute; top: 16px; right: 44px; background: #C0392B; color: #fff;
+  font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; min-width: 20px; text-align: center;
+}
+
+.group-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 1px; margin: 28px 0 10px; }
+.group-label:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="eyebrow">Admin Hub</div>
+  <h1>관리자 페이지 모음</h1>
+
+  <div class="group-label">웹사이트</div>
+  <div class="cards">
+    <a href="/admin_quotes.html" class="card">
+      <div class="icon">📋</div>
+      <div class="body">
+        <div class="title">견적 문의 관리</div>
+        <div class="desc">홈페이지로 들어온 견적요청서 확인</div>
+      </div>
+      <span class="badge" id="quoteBadge" style="display:none;"></span>
+      <div class="arrow">→</div>
+    </a>
+    <a href="/admin_gallery.html" class="card">
+      <div class="icon">🖼️</div>
+      <div class="body">
+        <div class="title">시공사례 관리</div>
+        <div class="desc">갤러리 페이지에 올라가는 시공사례 등록/수정</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+
+  <div class="group-label">비움박스</div>
+  <div class="cards">
+    <a href="https://box.veum.kr/admin_vt10.html" class="card">
+      <div class="icon">📦</div>
+      <div class="body">
+        <div class="title">비움박스 관리자</div>
+        <div class="desc">box.veum.kr 사이트 관리</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+
+  <div class="group-label">ERP</div>
+  <div class="cards">
+    <a href="https://erp.veum.kr/hub.html" class="card">
+      <div class="icon">🗂️</div>
+      <div class="body">
+        <div class="title">비움박스 · 타일 ERP</div>
+        <div class="desc">별도 로그인이 필요해요</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://zpsloypsfcnidqxjkvlo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GmeZMdD9GgRKMFuPzQJUSA_0B4sxJMp';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// 로그인 돼있으면 안 읽은 견적 문의 개수 표시
+(async function() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return; // 로그인 안 돼있으면 뱃지 생략 (클릭해서 로그인하면 됨)
+
+  const { count } = await sb.from('quote_requests').select('*', { count: 'exact', head: true }).eq('is_read', false);
+  if (count && count > 0) {
+    const badge = document.getElementById('quoteBadge');
+    badge.textContent = count;
+    badge.style.display = 'inline-block';
+  }
+})();
+</script>
+
+</body>
+</html>
